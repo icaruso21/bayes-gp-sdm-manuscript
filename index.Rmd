@@ -9,8 +9,7 @@ output:
   bookdown::pdf_book:
     includes:
       in_header: preamble.tex
-description: This is a minimal example of using the bookdown package to write a book.
-  The output format for this example is bookdown::gitbook.
+description: "Bayesian Inference for Species Distribution Modelling with Gaussian Processes"
 documentclass: book
 link-citations: yes
 bibliography:
@@ -21,7 +20,6 @@ biblio-style: apalike
 fontsize: 12pt
 linestretch: 1.7
 geometry: "left=1in, right=1in, top=1in, bottom=1in"
-
 ---
 ```{r setup, include = FALSE}
 library(tidyverse)
@@ -33,140 +31,119 @@ library(latex2exp)
 library(extrafont)
 #font_import(pattern = "cmu*") 
 loadfonts()
-setwd("~/thesis/bayespop/manuscript")
+setwd("~/bayes-gp-sdm-manuscript/")
 ```
 
-# Probability, Bayes’ theorem, and Bayesian inference
+# Probability and Bayes’ theorem
 
-The objective of this chapter is to provide an introduction and brief summary of the probability terms and concepts necessary for conceptualizing and approaching Bayesian inference. 
-Simply put, Bayesian inference is a statistical technique for iteratively updating a probability quantity of interest upon the observation of data.
-Specifically, the statistical technique Bayesian inference relies on is known as Bayes’ theorem and the probability quantity of interest is most often a probability density function, though in introductory examples is oftentimes a single value. 
-Before embarking on this exposition of Bayesian statistics, one must first gain a basic appreciation for a few key elements of probability theory which will provide us with the foundational terms to discuss Bayesian inference and its applications in the broad field of machine learning—random variables and probability functions. 
-A brief discussion of random variables will naturally lead to the introduction of cumulative distribution functions and probability functions/ distributions.
-An understanding of probability functions will provide the fundamental terminology necessary for introducing a discussion of the concepts expected value and conditional probability.
-This chapter will then conclude by introducing Bayes' theorem and Bayesian inference in demonstrating the steps for performing a simple Bayesian update.
+This chapter provides an introduction to the probability concepts necessary to understand Bayesian inference. 
+Simply put, Bayesian inference is a statistical technique for estimating a quantity of interest upon the observation of data, while explicitly incorporating prior knowledge or belief about that quantity of interest.
+Before embarking on an exposition of Bayesian statistics, we must first gain a basic understanding of a few key elements of probability theory—random variables, cumulative distribution functions, probability functions/ distributions, expected value, and conditional probability.
+This chapter then concludes by introducing Bayes' theorem and Bayesian inference, and demonstrating the steps for performing a simple Bayesian update.
 
 
 ## Random Variables
 
-Imagine for a moment you are tossing a coin. 
-There are many experiments you could perform by tossing a coin, but for the sake of simplicity let us consider our quantity of interest to be the number of times our coin lands on a tails. 
-It is clear that the number of tails, the outcome of our experiment, is dependent on the eventual realization of some random (stochastic) process, or at the very least not clearly deterministic. 
-In countless scenarios like the coin toss experiment, random variables provide a convenient and uniform terminology for discussing sample spaces and their connection to some sequence of observations that is the data. 
-In essence, a random variable is a variable whose value is dependent on the outcome(s) of a stochastic phenomenon. 
-A random variable is commonly expressed as $X$, and a realized value of $X$ is $x$. 
+Imagine for a moment you are tossing a fair coin. 
+There are many experiments you could perform by tossing a coin, but let us consider our quantity of interest to be the fraction of times our coin lands on a tails. 
+It is clear that the number of tails, the outcome of our experiment, is dependent on the eventual realization of some random process.
+A random variable $X$ is a variable whose value is dependent on the outcome(s) of a stochastic phenomenon. 
+The realized value of $X$ is denoted as $x$. 
 
-In the canonical example of tossing a coin, where the data is some sequence of coin tosses $[H, T, T, …]$, we could define a random variable $X$ to be the number of tails. 
-In this toy example, as noted above, the realized value of $X$, is dependent on the outcome(s) of a random event—a coin toss. 
-In the case of tossing a coin twice consecutively, $X$—the number of tails observations—has three possible realized states, $x$, depending on the outcome of this stochastic experiment: $x = 0$, $x = 1$, or $x = 2$. 
-Additionally, assuming the coin is a fair coin the probability that our random variable $X$ is realized as $x$, some real number of tails, can be assigned to each possible overall outcome of this coin toss experiment as represented in Table \@ref(tab:rv)
+In the example of tossing a coin, where the data is a sequence of coin tosses, e.g., $[H, T, T, …]$, we define the random variable $X$ to be the number of tails. 
+If we toss the coin twice, $X$ has three possible realized states, $x$, depending on the outcome of this stochastic experiment: $x = 0$, $x = 1$, or $x = 2$. 
+Table \@ref(tab:rv) shows the probability that our random variable $X$ takes value $x$, some actual number of tails.
 
 ```{r rv, echo=FALSE, fig.align='center'}
 my_df = cbind(x = c(0, 1, 2),
           `P(X = x)` = c(0.25, 0.5, 0.25))
 my_df %>%
-  knitr::kable(caption = "P(X = x) for two tosses", booktabs = TRUE) %>%
+  knitr::kable(caption = "P(X = x) for two tosses", booktabs = TRUE, format="latex") %>%
   kable_styling(latex_options = c("hold_position"))#, table.attr = "style='width:40%;'") %>%   
   #kable_styling(position = "center")
 
 ```
 
 
-In reality, this is an example of a specific type of random variable known as a discrete random variable. 
-Discrete random variables can, as their name implies, only assume discrete values. 
-To the contrary, continuous random variables and mixed random variables are useful for describing sample spaces with continuous and mixed outcomes, respectively. 
-For example, a continuous random variable may be used to describe an experiment measuring blossoming heights of flowers, where the data is a sequence of observations of heights at which different flowers blossomed. 
-In this case, the outcome of our blossoming experiment is an infinite number of real values that is properly represented in a continuous random variable. 
+The r.v. $X$ is is an example of a *discrete random variable*. 
+Discrete random variables can only assume discrete values. 
+To the contrary, continuous random variables are useful for describing continuous sample spaces.
+For example, a continuous random variable may be used to represent the outcome of an experiment measuring blossoming heights of flowers, where the data is a sequence of observations of heights at which different flowers blossomed. 
+In this case, the outcome of our blossoming experiment can be any of an infinite number of real values, thus is properly modeled by a continuous random variable. 
 
 
 ## Cumulative Distribution Functions
 
-The concept of a distribution follows intuitively from our previous discussion of random variables. 
 In the previous example we represented the probability of various outcomes of a coin toss experiment in a tabular format. 
-Another way to represent this distribution of probabilities is as a cumulative distribution function:
+Another way to represent this set of probabilities is as a *cumulative distribution function*.
 
 ```{definition, cdf, name="Cumulative distribution function 'CDF'"}
 *The cumulative distribution function is defined as a function where $F_{X}\in[0, 1]$:*
-$$F_{X}(x)=P(X≤x)$$
+$$F_{X}(x) \doteq P(X≤x)$$
   
 ```
 
 
-As the name implies, the cumulative distribution function simply represents the probability that a random variable $X$ is realized to be less than or equal to $x$ for each possible input value of $x$. 
+The cumulative distribution function $F_{X}(x)$ simply represents the probability that a random variable $X$ takes a value less than or equal to $x$ for each possible input value of $x$. 
 Figure \@ref(fig:cdfimg) depicts a graphical representation of the CDF for our coin tossing experiment.
 
-```{r cdfimg, echo=FALSE, out.width="70%", fig.align="center", fig.cap="CDF for tossing a coin twice (from All of Stats, should I make my own?)"}
+(ref:cdffig) CDF for tossing a coin twice [@Wasserman2004]
+
+```{r cdfimg, echo=FALSE, out.width="70%", fig.align="center", fig.cap='(ref:cdffig)'}
 knitr::include_graphics("./images/cdf.png", auto_pdf=TRUE)
 
 ```
 
 Here, for every value of $x$—the number of tails in two coin tosses—the probability that $X$ is equal to or less than this value is represented. 
 In this discrete example, we see that our CDF is represented by several non-decreasing discrete lines defined for all $x$. 
-In the example of a continuous random variable, this function is a continuous, non-decreasing distribution also defined for all $x$. 
+In the example of a continuous random variable, this function is a left-continuous, non-decreasing distribution also defined for all $x$. 
 
 
 ## Probability Mass and Density Functions
 
-Now that we have a basic understanding of random variables and their association with the CDF, we can begin discussing probability functions for both continuous and discrete random variables. 
-Broadly speaking, the probability mass function and probability density function are two methods for calculating a probability over a sample space, which find their use with discrete and continuous random variables respectively. 
+The probability mass function and probability density function allow us to express probabilities of events over a sample space, and find their use with discrete and continuous random variables respectively. 
   
-In the discrete setting, a probability mass function yields the probability of an outcome for every possible outcome in any given discrete schema. 
-To reiterate the previous discussion of discrete versus continuous random variables, a random variable $X$ is considered discrete "if it takes countably many values $\{x_{1}, x_{2}, …\}$" [@Wasserman2004]. 
-In this case, a definition for the probability mass function follows:
+In the discrete setting, the probability mass function for a random variable $X$ yields the probability that $X$ takes a value for every possible value that $X$ can take.
 
 ```{definition, pmf, name="Probability mass function 'PMF'"}
 *The probability function for a discrete random variable $X$—the probability mass function for $X$—is defined as a function*
-$$F_{X}(x)=P(X=x)$$
+$$f_{X}(x) \doteq P(X=x)$$
   
 ```
 
 Here, the PMF has a few key attributes. 
-Namely $P(X=x)>0$ for every $x$ in the sample space of $X (x \in S_{X})$, and $\sum_{x \in S_{X}}f(x)=1$. 
-With these features in mind, the probability mass function of $X$ follows logically from the cumulative distribution function of $X$ insofar as the CDF is the sum of the PMF for all $x_{i}≤x$. 
-This relationship in the discrete scenario between the PMF and CDF can be expressed formally as: $$F_{X}(x)=P(X≤x)=\sum_{x_i≤x}f_{X}(x_{i})$$
+Namely $P(X=x)>0$ for every $x$ in the sample space $S_{X}$ of $X$, and $\sum_{x \in S_{X}}f_{X}(x)=1$. 
+With these features in mind, the probability mass function of $X$ follows logically from the cumulative distribution function of $X$ insofar as the CDF is the sum of the PMF for all $x_{i}≤x$, i.e., $$F_{X}(x) \doteq P(X≤x)=\sum_{x_i≤x}f_{X}(x_{i}).$$
 
-In the continuous setting where these attributes no longer hold, a probability density function (PDF) is instead used to represent probability of $x$ for all $x \in S_X$. 
-In the case where the random variable $X$ is continuous, a PDF is defined as follows:
+In the case where the random variable $X$ is continuous, its PDF is defined as follows.
 
 ```{definition, pdf, name="Probability density function 'PDF'"}
-*The probability function for a continuous random variable $X$—the probability density function for $X$—is defined as a function $f(x)$ where $a$ and $b$ are two real numbers and every $a ≤ b$, so*
-$$P(a<X<b)=\int_{a}^{b}f_X(x)dx$$
+*The probability function for a continuous random variable $X$—the probability density function for $X$—is defined as a function $f(x)$ where $a$ and $b$ are two real numbers such that $a ≤ b$, so*
+$$P(a<X<b) \doteq \int_{a}^{b}f_X(x)dx.$$
   
 ```
 
 In other words, the probability that the realized value $x$ of our continuous random variable $X$ is between two numbers $a$ and $b$ is equal to the integral of the probability density function of $x$ from $x = a$ to $x = b$. 
-This formalization of the PDF $f_X(x)$ allows a natural comparison to be drawn to the CDF $F_X(x)$ of a continuous random variable $X$, that is:
+This formalization of the PDF $f_X(x)$ allows a natural comparison with the CDF $F_X(x)$ of $X$,
 
-$$F_X(x)=\int_{-\infty}^{x}f_X(x)dx$$
+$$F_X(x) \doteq \int_{-\infty}^{x}f_X(x)dx.$$
 
-Specifically, this implies that $F'_X(x)=f_X(x)$ for all differentiable points in $F_X$. 
-In plain English this signifies that the derivative of the CDF is the PDF, in all cases involving a continuous random variable. 
-  
-Probability density and mass functions come in a wide variety of forms, each with their own properties and methodologies for defining their shape and characteristics. 
-Some are useful for defining binary data, others are useful for defining arbitrarily large sample spaces with any number of localized concentrations of density. 
-Still others boast properties, such as being closed under conditioning and marginalization, that make them useful for specific statistical applications. 
-Figure \@ref(fig:distributions) displays some of the most common continuous and discrete probability distributions.
-
-```{r distributions, echo=FALSE, out.width="70%", fig.align="center", fig.cap="Common probability distributions"}
-knitr::include_graphics("./images/distributions.png", auto_pdf=TRUE)
-
-```
+Specifically, this implies that $F'_X(x)=f_X(x)$ for all differentiable points of $F_X$. 
+In plain English this signifies that the derivative of the CDF is the PDF.
 
 ## Expectation
 
 One of the final core statistical concepts necessary to approach Bayesian statistics on sure footing is the idea of expectation or expected value. 
-Simply put, the expectation of a random variable $X$ is the average value of $X$. 
 
-```{definition, e, name="Expectation '$E$'"}
-*The expectation, expected value, or mean of a random variable X is*
-$$E(X)=EX=\begin{cases}\sum_{x}xf(x) & \textrm{if }X\textrm{ is discrete}\\\int{xf(x)dx} & \textrm{if }X\textrm{ is continuous}\end{cases}$$
+```{definition, e, name="Expectation"}
+*The expectation or expected value of a random variable X is*
+$$E(X) \doteq \begin{cases}\sum_{x}xf_{X}(x) & \textrm{if }X\textrm{ is discrete}\\\int{xf_{X}(x)dx} & \textrm{if }X\textrm{ is continuous}\end{cases}$$
 
 ```
 
-While on first glance the expectation may appear unfamiliar and dissimilar to the common understanding of a mean, key characteristics of probability distributions will foster an intuitive understanding of their similarities.
-To return to a familiar example, consider a random variable $X$ to represent the number of tails in 6 coin tosses. Figure \@ref(fig:binom) depicts the PMF for $X$ using the binomial distribution, which represents the probability of observing a specific number of successes in a success-failure experiment. 
+To return to a familiar example, consider a random variable $X$ to represent the number of tails in 6 coin tosses. Figure \@ref(fig:binom) depicts the PMF for $X$ using the *binomial distribution* $B(6,0.5)$ which represents the probability of observing a specific number of successes in a success-failure experiment. 
 
-```{r binom, echo=FALSE, out.width="70%", fig.align="center", fig.cap="The binomial probability mass function for the 6 trial coin toss experiment"}
+```{r binom, echo=FALSE, fig.show="hold", out.width="50%", fig.align='center', fig.cap="The binomial probability mass function for the 6 trial coin toss experiment"}
 x <- seq(0,6,by = 1)
 y <- dbinom(x,6,0.5)
 
@@ -180,9 +157,10 @@ binom %>% ggplot(aes(x = x, y = y)) +
   theme_bw() + 
   theme(text = element_text(size=12, family="CMU Serif")) +
   ggExtra::removeGrid()
+
 ```
 
-In this case, the x-axis represents each particular outcome ($x$) of $X$ and the y-axis is the relative probability of that outcome. Table \@ref(tab:bino) presents the output of the binomial PMF for every $x \in X$. 
+In this case, the x-axis represents each possible outcome $x$ and the y-axis is the probability of that outcome. Table \@ref(tab:bino) presents the value of the binomial PMF for every $x \in X$. 
 
 
 ```{r bino, echo=FALSE, fig.align='center'}
@@ -192,81 +170,199 @@ y <- round(y, digits = 3)
 binom <- as.data.frame(cbind(x = x, y = y))
 
 binom %>%
-  knitr::kable(caption = "P(X = x) for six tosses", booktabs = TRUE, linesep = "") %>%
+  knitr::kable(caption = "P(X = x) for six tosses", booktabs = TRUE, linesep = "", format="latex") %>%
   kable_styling(latex_options = c("hold_position"))#, table.attr = "style='width:40%;'") %>%   
   #kable_styling(position = "center")
 
 ```
 
-Computing $EX$ given the values in this table is demonstrated using the discrete case of Definition \@ref(def:e) in Example \@ref(exm:coin).
+Computing $E(X)$ given the values in this table is demonstrated using the discrete case of Definition \@ref(def:e) in Example \@ref(exm:coin).
 
 ```{example, coin}
-The expected value of a discrete random variable $X \sim B(6, 0.5)$, which represents the number of tails in 6 coin tosses and has a binomial distribution, is calculated as follows:
+The expected value of $X \sim B(6, 0.5)$,
 $$\begin{split}
 E(X) & = \sum_{x}xf(x) \\
-  & =  (0*0.16)+(1*0.094)+(2*0.234)+(3*0.312)+(4*0.234)+(5*0.094)+(6*0.016)\\
+  & =  (0 \times 0.16)+(1 \times 0.094)+(2 \times 0.234)+(3 \times 0.312)\\
+  & \;\;\;\; +(4 \times 0.234)+(5 \times 0.094)+(6 \times 0.016)\\
   & = 3
 \end{split}$$
 ```
 
-Naturally, the expected value of $X$ is 3 in Example \@ref(exm:coin). 
-Importantly, while in this case $EX$ corresponds well to the peak in the PMF for this experiment this should not be assumed to be the case unilaterally, as the same expectation would result from any distribution symmetrical about $x=3$.
-While surfically the expected value of a random variable may appear to be a trivial reframing of the calculating of a mean, it is crucial to note that expectation is calculated using the relative probability of $x$ in lieu of the number of observations in the sample space. 
-In the continuous case, this is the property that makes computing the expectation possible. 
-To summarize, in the field of probability the expected value provides a crucial, unifying term for the characterization of probability distributions. 
-This term will prove useful in many situaions, including normalization in the context of Bayes' theorem.
+Importantly, while in this case $E(X)$ corresponds well to the "peak" in the PMF, this should not be assumed to be the case unilaterally, as the same expectation would result from any distribution symmetrical about $x=3$.
 
 ## Conditional Probability
 
-Conditional probability provides a uniform, comprehensible format for considering the probability of events which are dependent on the outcome of a different event. Conditional probability, as presented in Definition \@ref(def:condprob), requires only that the event on which some other event depends has some nonzero probability of occuring.
+Conditional probability provides a way to model the probability that an event occurs, given that another event is known to have occured.
+Conditional probability, as presented in Definition \@ref(def:condprob), requires only that the event assumed to have occured, i.e., the event we are *conditioning on*, has a nonzero probability of occuring.
 
 ```{definition, condprob, name="Conditional Probability"}
 *Assuming $P(B)>0$,*
-$$P(A|B)=\frac{P(AB)}{P(B)}$$
+$$P(A|B)=\frac{P(A \cap B)}{P(B)}$$
 ```
 
-Conditional probability asserts that the probability of event A occuring given that event B occurs is equivalent to the probability of both A and B occuring divided by the probability that B occurs. Example \@ref(exm:condprobe) explains how to use conditional probability to calculate the probability of drawing an ace from a deck given I drew a king. While it may seem logical to conclude that $P(A|B)=P(B|A)$, this is not the case generally speaking. 
-For example, the probability that I can swim given that I am in the water is clearly not the same as the probability that I am in the water given that I can swim.
+Conditional probability asserts that the probability of event A occuring given that event B occurs is equivalent to the probability of both A and B occuring (denoted as $A \cap B$) divided by the probability that B occurs. $P(A|B)$ is not generally equal to $P(B|A)$ 
+For example, the probability that I am swimming given that I am in the water is clearly not the same as the probability that I am in the water given that I am swimming.
+Example \@ref(exm:condprobe) explains how to use conditional probability to calculate the probability of rolling a 2 on a 6-sided dice, given I know the outcome of the roll is less than 4.
+
 
 ```{example, condprobe}
-Conditional probability can be used to determine the probability of drawing an ace from a standard deck of cards without replacement, given I first drew a king from that deck. This scenario can be represented as:
-$$A = \textrm{Draws ace, } P(A) = 4/51$$
-$$B = \textrm{Draws king, } P(B) = 4/52$$
+Conditional probability can be used to determine the probability of rolling a 2 on a 6 sided dice, given that I know the outcome will be less than 4. This scenario can be represented as:
+$$A = \textrm{rolls 2, } P(A) = 1/6$$
+$$B = \textrm{rolls < 4, } P(B) = 3/6$$
+$$P(A \cap B) = P(A) = 1/6$$
 $$\begin{split}
-P(ace|king) = P(A|B) & = \frac{P(AB)}{P(B)} \\
-  & = \frac{\frac{4}{51}\frac{4}{52}}{\frac{4}{52}} \\
-  & = \frac{4}{663} = 0.00603
+P(2|<4) = P(A|B) & = \frac{P(A \cap B)}{P(B)} \\
+  & = \frac{\frac{1}{6}}{\frac{3}{6}} \\
+  & = \frac{1}{3}
 \end{split}$$
 ```
 
-## Bayes’ Theorem and Bayesian Inference
+## Bayes’ Theorem for Discrete Values
 
 Consider a student, Alice, who was exposed to someone with COVID-19. 
 Being a responsible person, Alice decides she should get tested. 
-She recieves a test and the accompanying information sheet states the test is 85% accurate, meaning that 85% of the time it gives positive results to recipients who are actually positive. 
-The following day, Alice recieves a positive test.
-As a student of probability, Alice recognizes that the 85% accuracy statistic only means the conditional probability that she recieves a positive test given she is COVID positive ($P(+ test|covid+)$) is 85%.
-What Alice actually wants to know is the conditional probability that she is positive given she just tested positive ($P(covid+|test+)$).
-As stated in the previous section's discussion of conditional probability, $P(A|B) != P(B|A)$.
-However Bayes' theorem, which follows intuitively from the theorem of conditional probability, can provide this answer for Alice.
-Conditional probability as presented in Definition \@ref(def:condprob), can be trivially reframed as: 
-
-$$P(AB)=P(A|B)P(B)$$
+She receives a test and the accompanying information sheet states the test is 85% accurate, meaning that 85% of the time it gives positive results to recipients who are actually positive. The sheet also says that the test yields a false positive 30% of the time, meaning that if Alice is actually negative she will still receive a positive test 30% of the time. 
+The following day Alice receives a positive test.
+As a student of probability, Alice recognizes that the 85% accuracy statistic only means the conditional probability that she receives a positive test given she is COVID positive ($P(+ test|covid+)$) is 85%.
+However, Alice is actually interested in the conditional probability that she is positive given she just tested positive, $P(covid+|test+)$.
+As stated in the previous section's discussion of conditional probability, $P(A|B) \neq P(B|A)$.
+Bayes' theorem, which follows intuitively from the theorem of conditional probability, provides this answer for Alice.
+We can rewrite Definition \@ref(def:condprob) as 
+$$P(A \cap B)=P(A|B)P(B).$$
 Furthuremore, it can also be stated that
-$$P(BA)=P(B|A)P(A)$$
-Clearly $P(AB)=P(BA)$, as both terms can be used interchangeably to represent the intersection of two sets A,B.
+$$P(B \cap A)=P(B|A)P(A)$$
+Clearly $P(A \cap B)=P(B \cap A)$, as both terms can be used interchangeably to represent the intersection of two sets A and B.
 This equivalency means that we can rewrite these equations as
 $$P(B|A)P(A)=P(A|B)P(B)$$
-Dividing both sides of this equivalency by $P(B)$ yields Bayes' theorem, as formalized in Definition \@ref(def:bayestheorem). 
+Dividing both sides of this equivalency by $P(B)$ yields Bayes' theorem, as formalized in Definition \@ref(def:bayestheorem) [@Junker2003]. 
 
 ```{definition, bayestheorem, name="Bayes' Theorem"}
 *Assuming $P(B)>0$ and $P(A)>0$,*
 $$P(B|A)=\frac{P(A|B)P(B)}{P(A)}$$
 ```
 
+Additionally, the *law of total probability*, Definition \@ref(def:totprob), can be used to compute $P(A)$ for a discrete sample space $S_{B}$ [@Wasserman2004].
 
-# Approximation algorithms for inference on complex systems
+```{definition, totprob, name="Law of Total Probability"}
+*$B_{0},...,B_{k}$ is a partition of a discrete sample space $S_{B}$, and*
+$$P(A)=\sum_{i=1}^{k}P(A|B_{i})P(B_{i}).$$
+```
 
+Returning to our example, the partition of this sample space is $[B_{0}=covid+,\textrm{ } B_{1}=covid-]$, as Alice is either COVID positive or she is not. 
+The final piece of information needed is the *prior* probability $P(B)$, which can be thought of as the likelihood of contracting covid from any given exposure. 
+Alice did some research and concluded this likelihood is 20%. 
+Given the information from the factsheet and Alice's prior knowledge about the probability of contracting covid, Example \@ref(exm:covid) shows how Alice can use Bayes' theorem to answer her question and find the probability that she is actually positive given she has tested positive.
+
+```{example, covid}
+Given the following information:
+$$P(test+|covid+)=0.85 \textrm{, } P(test+|covid-)=0.30 \textrm{, } P(covid+)=0.20 \textrm{, } P(covid-)=0.80$$
+We can represent the conditional probability that Alice is COVID positive given that she tested positive $P(covid+|test+)$ as
+$$\begin{split}
+P(covid+|test+) & = \frac{P(test+|covid+)P(covid+)}{P(test+|covid-)P(covid-)+P(test+|covid+)P(covid+)}\\
+& = \frac{(0.85)(0.20)}{(0.30)(0.80)+(0.85)(0.20)} \\
+& = \frac{0.17}{0.24+0.17} \\
+& = 0.41
+\end{split}$$
+```
+
+## Bayes’ Theorem for Probability Distributions
+
+While Bayes' theorem can be correctly applied to discrete values, evaluating Bayes' theorem for probability distributions as an alternative to discrete values will allow uncertainty to be represented in a natural manner. 
+In the previous example, we considered the prior probability that Alice contracts COVID in any given exposure to be an exact value of 0.20. 
+Given that the virus that causes COVID-19 is not well understood at present moment, this value is clearly not an accurate representation of the uncertainty related to our prior knowledge as different sources may give varying values for this prior plausibility. 
+Considering Bayes' theorem in terms of probability distributions will remove this assumption from the model in favour of a probability distribution, which represents a weighted range of all possible values of our parameter as highlighted in Definition \@ref(def:bayesprob).
+
+```{definition, bayesprob, name="Bayes' Theorem for Probability Distributions"}
+*Assuming $P(\theta)>0$ and $P(X)>0$,*
+$$P(\theta|X)=\frac{P(X|\theta)P(\theta)}{P(X)},$$
+```
+where $P(\theta|X)$ is the posterior probability, $P(\theta)$ is the prior probability distribution of the parameter of interest $\theta$, $P(X|\theta)$ is the likelihood function or the probability of the data given $\theta$, and $P(X)$ is the marginal likelihood of the data $X$.
+In this case, the marginal likelihood $P(X)$ functions to normalize the posterior distribution and is evaluated for a continuous sample space as:
+$$P(X)=\int P(X|\theta)P(\theta)d\theta$$
+
+# Approximation algorithms for inference on distributions
+
+When performing Bayesian Inference, approximation algorithms are necessary for updating the relative probability of parameters of interest in a computationally feasible manner. 
+In modelling scenarios with multiple parameters forming a multidimensional parameter space, evaluating parameters at even a relatively small number of possible values rapidly becomes intractible. 
+This problem is further exaggerated in the evaluation of hierarchical models, which are of particular interest in many application domains including biology, economics, chemistry, and physics. 
+Here, we discuss markov chain monte carlo based sampling algorithms, which allow for efficiently sampling from approximations of probability distributions.
+
+## Markov Chain Monte Carlo
+
+Markov chain monte carlo (MCMC) provides an efficient methodology for sampling from the posterior curve to perform a Bayesian update. We will first provide a theoretical background into markov chains and monte carlo approximation, followed by a discussion of *Metropolis-Hastings Monte Carlo*, an algorithm for performing MCMC. 
+
+### Markov Chains
+
+A markov chain is a stochastic model expressing a sequence of possible states in which the probability of each state, $X_{i-1}$, depends only on the value attained in the previous state, $X_{i-1}$. 
+A markov chain has several properties which are essential for its application in Bayesian statistics. 
+Namely, each state in the chain depends only on the previous one; therefore, the markov chain preserves the assumed dependence between samples from our posterior distribution. 
+Additionally, this localized dependence lends the markov chain another attractive feature in that it is effectively memoryless.
+Definition \@ref(def:markov) formalizes the requirements for a markov chain [@Wasserman2004].
+
+```{definition, markov, name="Markov Chain"}
+*A discrete sequence of random variables ${X_{0},X_{1},...,X_{i}}$ is a Markov chain iff it satisfies the Markov property; that is, for all $i$ and $x \in X$:*
+$$P(X_{i}=x|X_{0},...X_{i-1})=P(X_{i}=x|X_{i-1})$$
+```
+
+A markov chain is often represented as a directed graph where states in the sequence of random variables are represented as vertices, and edges represent possible paths between states whose weights are the probabilities of edges being traversed.
+
+### Monte Carlo Approximation
+
+Monte Carlo approximation provides a convient method for approximately computing quantities of interest. 
+This schema will allow for drawing samples from arbitrarily complex probability distributions. 
+The basic example, known as monte carlo integration, evaluates an integral using monte carlo approximation [@Wasserman2004]. 
+If we want to evaulate an integral for some function $f(x)$, where 
+$$I=\int_{a}^{b}f(x)dx \textrm{ ,}$$
+we can approximate $I$ using monte carlo approximation. $f(x)$ can be alternatively expressed as two functions, $h(x)$ and $w(x)$, where $h(x)=\frac{1}{a-b}$ and $w(x)=f(x)(b-a)$ as follows.
+$$I=\int_{a}^{b}f(x)dx=\int_{a}^{b}w(x)h(x)dx$$
+Conveniently, $h$ is a pdf of a uniform r.v. $X$ over $[a,b]$, which means that $I$ can be rewritten in terms of expectation as
+$$I=E_{f}(w(X)) \textrm{ .}$$
+In conjunction with the law of large numbers, this means that if we generate a sequence of random variables from a uniform distribution $X_{0},...,X_{N}\sim unif(a,b)$ then the standard Monte Carlo integration method asserts
+
+$$\hat{I}\equiv\frac{1}{N}\sum_{i=0}^{N}w(X_{i})\rightarrow E(w(X))=I \textrm{ .}$$
+
+In other words, $\hat{I}$ approaches $I$ as $N$ grows sufficiently large. 
+Constructing a Markov chain for evaluation with Monte Carlo will maintain the inherent, presumed dependence between samples of a sequence of random variables while facilitating the random sampling of extremely complex probability distributions. 
+As we will expand on in the following sections, this algorithmic framework is particularly useful because it will work for models with non-normal posteriors, including hierarchical models. 
+
+## Metropolis-Hastings MCMC
+
+*Metropolis-Hastings MCMC* is one common algorithm for sampling from the posterior distribution to perform a Bayesian update. 
+While it is not always the fastest in practice and requires manual tuning to work effectively, Metropolis-Hastings provides a foundation for more complex algorithms such as *Hamiltonian Monte Carlo* with *No-U-Turn sampling*. 
+To reiterate, the purpose of sampling in Bayesian inference is to draw from some density for parameters theta. 
+In this case, the density we are drawing from is the Bayesian posterior $P(\theta|data)$, which for the purposes of MCMC is referred to as the *target distribution*. 
+Metropolis-Hastings algorithm provides a method for sampling from an approximation of the target distribution known as the *stationary distribution*. 
+Critically, the law of large numbers guarantees that with sufficiently many iterations of Metropolis-Hastings, the stationary distribution will converge on the target distribution and samples drawn from the stationary distribution will appear to be samples from the target distribution. 
+Essentially, given some sequence of states $X_{0},X_{1},...,X_{i}$ from a Markov-Chain, where $X_{0}$ is chosen arbitrarily, an iteration of Metropolis-Hastings produces the next state to include in the sequence. 
+As presented formally in Definition \@ref(def:methas), this is achieved by generating a *proposal* for $X_{i+1}$ from the *proposal distribution* $q(y|X_{i})$, transition kernel, and then accepting the proposal with some probability dependent on the relative, target probabilities of the current state $X_{i}$ and the proposal [@Wasserman2004]. 
+
+```{definition, methas, name="Metropolis-Hastings MCMC"}
+*$X_{i+1}$ is generated given $X_{0},X_{1},...,X_{i}$ in the following manner:*
+\begin{enumerate}
+  \item Sample a proposal $Y$ from the proposal distribution $Y \sim q(y|X_{i}) \textrm{ .}$
+  \item Evaulate the ratio of probabilities in the stationary distribution $h(x)$ for $r(X_{i},Y)$ where $$ r(x,y)=min \{\frac{f(y)}{f(x)} \frac{q(x|y)}{q(y|x)} ,1 \} \textrm{ .}$$
+  \item Compute the next state $X_{i+1}$, where $$X_{i+1}=\begin{cases}Y & \textrm{with probability }r \\ X_{i} & \textrm{with probability }1-r \end{cases} \textrm{ .}$$
+\end{enumerate}
+```
+
+A simplification of the acceptance probability $r(x,y)$ occurs in a special case of Metropolis-Hastings known as random walk Metropolis-Hastings, where the proposal distribution is a standard normal distribution $N(0,1)$.
+This case is a random walk because the proposal $Y$ is generated by adding a random number sampled from a standard normal distribution to $X_{i}$.
+When the proposal distribution is a symmetric distribution---as is the case with the normal distribution---$q(y|x)=q(x|y) \therefore \frac{q(x|y)}{q(y|x)}=1$ .
+This means that the acceptance probability can be simplified as follows. $$r(x,y)=min \{\frac{f(y)}{f(x)},1 \}$$
+
+While Metropolis-Hastings may seem appealing because it is both memoryless and able to approximate very complex distributions, its downfall lies in the manual tuning and iteration necessary to achieve convergence of the stationary distribution to the target distribution in a reasonable number of iterations. 
+Recall that Metropolis-Hastings generates proposals by sampling from some distribution, and in the case of random walk metropolis this is a normal distribution centered about $X_{i}$. 
+Here, the standard deviation of the normal distribution, known as the step size, dictates the relative distance in the sample space between $X_{i}$ and the generated proposal.
+If the step size is too low, the algorithm will make very small steps and may miss key features of the target distribution, causing the stationary distribution to require a much larger number of iterations to converge on the target distribution.
+On the other hand if the step size is too large, proposals will be overwhelmingly generated from the low-probability tails of the distribution, again resulting in a lack of convergence and poorly representative samples from the stationary distributon.
+While some methods have been proposed for automatically tuning the step size parameter [@Graves2011], iterating on complex, Bayesian models to tune a parameter is not particularly efficient nor computationally feasible in many cases. 
+For this reason, other approximation algorithms are used in practical implementations of Bayesian inference.
+One such algorithm, *Hamiltonian Monte Carlo* (HMC), relies on theorhetical physics to compute a latent momentum variable which is applied to a hamiltonian, effectively simulating a ball rolling around the multi-dimensional sample space [@Brooks2011]. 
+Despite the increased computational cost, this method is appealing because of its ability to generate proposals from distant regions of the stationary distribution with high acceptance probabilities.
+This means that in practice, the HMC algorithm's stationary distribution converges on the target distribution with far fewer iterations than traditional Metropolis-Hastings implementations. 
+Though HMC still requires the user to specify a step size as well as a number of steps to move the hamiltonian before considering a proposal, in practice it is much more efficient and requires fewer iterations on a model.
+Additionally, a proposed extension to HMC called the *No-U-Turn Sampler* (NUTS) automatically determines the number of steps and was empirically demonstrated to perform at least equally as well as standard HMC [@Homan2014].
+The approximation algorithms breifly covered in this chapter underpin modern applications for Bayesian inference, including STAN, which are discussed in the following chapter.
 
 # Modern Bayesian inference with STAN
 

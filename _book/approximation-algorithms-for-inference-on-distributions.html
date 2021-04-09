@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Bayesian applications in Biology: Hybrid species distribution modelling with gaussian processes | Bayesian Inference for Species Distribution Modelling with Gaussian Processes</title>
+  <title>Chapter 2 Approximation algorithms for inference on distributions | Bayesian Inference for Species Distribution Modelling with Gaussian Processes</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Bayesian applications in Biology: Hybrid species distribution modelling with gaussian processes | Bayesian Inference for Species Distribution Modelling with Gaussian Processes" />
+  <meta property="og:title" content="Chapter 2 Approximation algorithms for inference on distributions | Bayesian Inference for Species Distribution Modelling with Gaussian Processes" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Bayesian applications in Biology: Hybrid species distribution modelling with gaussian processes | Bayesian Inference for Species Distribution Modelling with Gaussian Processes" />
+  <meta name="twitter:title" content="Chapter 2 Approximation algorithms for inference on distributions | Bayesian Inference for Species Distribution Modelling with Gaussian Processes" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="modern-bayesian-inference-with-stan.html"/>
-
+<link rel="prev" href="index.html"/>
+<link rel="next" href="modern-bayesian-inference-with-stan.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -112,16 +112,43 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Bayesian applications in Biology: Hybrid species distribution modelling with gaussian processes</h1>
+<div id="approximation-algorithms-for-inference-on-distributions" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Approximation algorithms for inference on distributions</h1>
+<p>When performing Bayesian Inference, approximation algorithms are necessary for updating the relative probability of parameters of interest in a computationally feasible manner. In modelling scenarios with multiple parameters forming a multidimensional parameter space, evaluating parameters at even a relatively small number of possible vlaues becomes computationally intractible. This problem is further exaggerated in the evaluation of hierarchical models, which are of particular interest in many application domains including biology, economics, chemistry, and physics. Here, we discuss markov chain monte carlo based sampling algorithms, which allow for efficiently sampling from approximations of probability distributions.</p>
+<div id="markov-chain-monte-carlo" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Markov Chain Monte Carlo</h2>
+<p>Markov chain monte carlo (MCMC) provides an efficient methodology for sampling from the posterior curve to perform a Bayesian update. Before approaching algorithms for performing MCMC, we must first introduce two computational techniques: markov chains and monte carlo approximation.</p>
+<div id="markov-chains" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Markov Chains</h3>
+<p>A markov chain is a stochastic model expressing a sequence of possible states in which the probability of each state, <span class="math inline">\(X_{i-1}\)</span>, depends only on the value attained in the previous state, <span class="math inline">\(X_{i-1}\)</span>. A markov chain has several properties which are essential for its application in Bayesian statistics. Namely, each state in the chain depends only on the previous one; therefore, the markov chain preserves the assumed dependence between samples from our posterior distribution. Additionally, this localized dependence lends the markov chain another attractive feature in that it is effectively memoryless. Definition <a href="approximation-algorithms-for-inference-on-distributions.html#def:markov">2.1</a> formalizes the requirements for a markov chain <span class="citation">(<a href="bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes.html#ref-Wasserman2004" role="doc-biblioref">Wasserman 2004</a>)</span>.</p>
 
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-Junker2003" class="csl-entry">
-Junker, Brian. 2003. <em>Basics of Bayesian Statistics</em>.
+<div class="definition">
+<span id="def:markov" class="definition"><strong>Definition 2.1  (Markov Chain)  </strong></span><em>A discrete sequence of random variables {X_{0},X_{1},…,X_{i}} is a Markov chain iff it satisfies the Markov property. That is for all <span class="math inline">\(i\)</span> and <span class="math inline">\(x \in X\)</span>:</em>
+<span class="math display">\[P(X_{i}=x|X_{0},...X_{i-1})=P(X_{i}=x|X_{i-1})\]</span>
 </div>
-<div id="ref-Wasserman2004" class="csl-entry">
-Wasserman, Larry. 2004. <em>All of Statistics</em>. Springer.
+<p>A markov chain is often represented as a directed graph where states in the sequence of random variables are represented as vertices and edges represent possible paths between states whose weights are the probabilities of edges being traversed.</p>
 </div>
+<div id="monte-carlo-approximation" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Monte Carlo Approximation</h3>
+<p>Monte Carlo approximation provides a convient method for approximately computing quantities of interest. This schema will allow for drawing samples from arbitrarily complex probability distributions. The basic example, known as monte carlo integration, evaluates an integral using monte carlo approximation <span class="citation">(<a href="bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes.html#ref-Wasserman2004" role="doc-biblioref">Wasserman 2004</a>)</span>. If we want to evaulate an integral for some function <span class="math inline">\(f(x)\)</span>:
+<span class="math display">\[I=\int_{a}^{b}f(x)dx\]</span>
+we can approximate <span class="math inline">\(I\)</span> using monte carlo approximation. <span class="math inline">\(f(x)\)</span> can be alternatively expressed as two functions, <span class="math inline">\(h(x)\)</span> and <span class="math inline">\(w(x)\)</span>, where <span class="math inline">\(h(x)=\frac{1}{a-b}\)</span> and <span class="math inline">\(w(x)=f(x)(b-a)\)</span> as follows:</p>
+<p><span class="math display">\[I=\int_{a}^{b}f(x)dx=\int_{a}^{b}w(x)h(x)dx\]</span>
+Conveniently, <span class="math inline">\(h\)</span> is a pdf of a uniform r.v. <span class="math inline">\(X\)</span> over <span class="math inline">\([a,b]\)</span>, which means that <span class="math inline">\(I\)</span> can be rewritten in terms of expectation as
+<span class="math display">\[I=E_{f}(w(X))\]</span>
+In conjunction with the law of large numbers, this means that if we generate a sequence of random variables from a uniform distribution <span class="math inline">\(X_{0},...,X_{N}\sim unif(a,b)\)</span> then the standard Monte Carlo integration method asserts</p>
+<p><span class="math display">\[\hat{I}\equiv\frac{1}{N}\sum_{i=0}^{N}w(X_{i})\rightarrow E(w(X))=I \textrm{ .}\]</span></p>
+<p>In other words, <span class="math inline">\(\hat{I}\)</span> approaches <span class="math inline">\(I\)</span> as <span class="math inline">\(N\)</span> grows sufficiently large. Generally, constructing a Markov chain for evaluation with Monte Carlo will maintain the inherent, presumed dependence between samples of a sequence of random variables while facilitating the random sampling of extremely complex probability distributions. As we will expand on in the following sections, this technique is particularly useful because will work for models with non-normal posteriors, including hierarchical models.</p>
+</div>
+</div>
+<div id="metropolis-hastings-monte-carlo" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Metropolis-Hastings Monte Carlo</h2>
+</div>
+<div id="hamiltonian-monte-carlo" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Hamiltonian Monte Carlo</h2>
+</div>
+<div id="no-u-turn-sampling" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> No-U-Turn Sampling</h2>
 </div>
 </div>
             </section>
@@ -129,8 +156,8 @@ Wasserman, Larry. 2004. <em>All of Statistics</em>. Springer.
           </div>
         </div>
       </div>
-<a href="modern-bayesian-inference-with-stan.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modern-bayesian-inference-with-stan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

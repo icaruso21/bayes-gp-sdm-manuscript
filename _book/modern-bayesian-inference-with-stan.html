@@ -23,14 +23,14 @@
 
 
 
-<meta name="date" content="2021-03-30" />
+<meta name="date" content="2021-04-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="approximation-algorithms-for-inference-on-complex-systems.html"/>
+<link rel="prev" href="approximation-algorithms-for-inference-on-distributions.html"/>
 <link rel="next" href="bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -50,8 +50,6 @@
 
 
 
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 
@@ -71,15 +69,27 @@
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Probability, Bayes’ theorem, and Bayesian inference</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Probability and Bayes’ theorem</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#random-variables"><i class="fa fa-check"></i><b>1.1</b> Random Variables</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#cumulative-distribution-functions"><i class="fa fa-check"></i><b>1.2</b> Cumulative Distribution Functions</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#probability-mass-and-density-functions"><i class="fa fa-check"></i><b>1.3</b> Probability Mass and Density Functions</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#bayes-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’ Theorem</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#bayesian-inference"><i class="fa fa-check"></i><b>1.5</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#expectation"><i class="fa fa-check"></i><b>1.4</b> Expectation</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#conditional-probability"><i class="fa fa-check"></i><b>1.5</b> Conditional Probability</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#bayes-theorem-for-discrete-values"><i class="fa fa-check"></i><b>1.6</b> Bayes’ Theorem for Discrete Values</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#bayes-theorem-for-probability-distributions"><i class="fa fa-check"></i><b>1.7</b> Bayes’ Theorem for Probability Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="approximation-algorithms-for-inference-on-complex-systems.html"><a href="approximation-algorithms-for-inference-on-complex-systems.html"><i class="fa fa-check"></i><b>2</b> Approximation algorithms for inference on complex systems</a></li>
+<li class="chapter" data-level="2" data-path="approximation-algorithms-for-inference-on-distributions.html"><a href="approximation-algorithms-for-inference-on-distributions.html"><i class="fa fa-check"></i><b>2</b> Approximation algorithms for inference on distributions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="approximation-algorithms-for-inference-on-distributions.html"><a href="approximation-algorithms-for-inference-on-distributions.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>2.1</b> Markov Chain Monte Carlo</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="approximation-algorithms-for-inference-on-distributions.html"><a href="approximation-algorithms-for-inference-on-distributions.html#markov-chains"><i class="fa fa-check"></i><b>2.1.1</b> Markov Chains</a></li>
+<li class="chapter" data-level="2.1.2" data-path="approximation-algorithms-for-inference-on-distributions.html"><a href="approximation-algorithms-for-inference-on-distributions.html#monte-carlo-approximation"><i class="fa fa-check"></i><b>2.1.2</b> Monte Carlo Approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="approximation-algorithms-for-inference-on-distributions.html"><a href="approximation-algorithms-for-inference-on-distributions.html#metropolis-hastings-monte-carlo"><i class="fa fa-check"></i><b>2.2</b> Metropolis-Hastings Monte Carlo</a></li>
+<li class="chapter" data-level="2.3" data-path="approximation-algorithms-for-inference-on-distributions.html"><a href="approximation-algorithms-for-inference-on-distributions.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>2.3</b> Hamiltonian Monte Carlo</a></li>
+<li class="chapter" data-level="2.4" data-path="approximation-algorithms-for-inference-on-distributions.html"><a href="approximation-algorithms-for-inference-on-distributions.html#no-u-turn-sampling"><i class="fa fa-check"></i><b>2.4</b> No-U-Turn Sampling</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="modern-bayesian-inference-with-stan.html"><a href="modern-bayesian-inference-with-stan.html"><i class="fa fa-check"></i><b>3</b> Modern Bayesian inference with STAN</a></li>
 <li class="chapter" data-level="4" data-path="bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes.html"><a href="bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes.html"><i class="fa fa-check"></i><b>4</b> Bayesian applications in Biology: Hybrid species distribution modelling with gaussian processes</a></li>
 <li class="divider"></li>
@@ -110,7 +120,7 @@
           </div>
         </div>
       </div>
-<a href="approximation-algorithms-for-inference-on-complex-systems.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="approximation-algorithms-for-inference-on-distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
