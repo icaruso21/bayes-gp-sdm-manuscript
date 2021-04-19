@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.28)  19 APR 2021 17:39
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.28)  19 APR 2021 18:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -915,12 +915,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [12] [13]
 Underfull \vbox (badness 4193) has occurred while \output is active []
 
-[14]
-
-Package natbib Warning: Citation `Gelman2013' on page 15 undefined on input lin
-e 383.
-
-[15] [16]
+[14] [15] [16]
 Chapter 2.
 
 Underfull \vbox (badness 1275) has occurred while \output is active []
@@ -1004,21 +999,17 @@ Chapter 4.
 
 ] [32
 
-])
-
-Package natbib Warning: There were undefined citations.
-
-[33] (./manuscript.aux)
+] [33]) [34] (./manuscript.aux)
 Package rerunfilecheck Info: File `manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: 8BA18BE2F69A77A3E13105701911E7D8;3103.
+(rerunfilecheck)             Checksum: E3DC861C4E36428907E6BD8E47069CB8;3065.
  ) 
 Here is how much of TeX's memory you used:
- 16903 strings out of 478922
- 298051 string characters out of 5865756
- 777487 words of memory out of 5000000
- 36517 multiletter control sequences out of 15000+600000
+ 16906 strings out of 478922
+ 298098 string characters out of 5865756
+ 777513 words of memory out of 5000000
+ 36520 multiletter control sequences out of 15000+600000
  409867 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 98i,16n,122p,1072b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 98i,16n,122p,1072b,452s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manuscript.pdf (33 pages).
+Output written on manuscript.pdf (34 pages).

@@ -454,10 +454,10 @@ A Markov chain is often represented as a directed, weighted graph where possible
 \hypertarget{metropolis-hastings-mcmc}{%
 \section{Metropolis-Hastings MCMC}\label{metropolis-hastings-mcmc}}
 
-\emph{Metropolis-Hastings MCMC} is one of the most used algorithms for sampling from the posterior distribution to perform a Bayesian update.
+\emph{Metropolis-Hastings MCMC} is a standard algorithm for sampling from the posterior distribution to perform a Bayesian update.
 While it is not always the fastest in practice and requires manual tuning to work effectively, Metropolis-Hastings provides a foundation for more complex algorithms such as \emph{Hamiltonian Monte Carlo} \citep{Brooks2011} with \emph{No-U-Turn sampling} \citep{Homan2014}.
-To reiterate, the purpose of sampling in Bayesian inference is to draw from some density for parameters \(\theta\).
-In this case, the density we are drawing from is the Bayesian posterior \(P(\theta|data)\), which for the purposes of MCMC is referred to as the \emph{target distribution}.
+To reiterate, the purpose of sampling in Bayesian inference is to draw from the posterior density with a goal of estimating \(P(\theta|data)\) for parameters \(\theta\).
+The Bayesian posterior \(P(\theta|data)\), for the purposes of MCMC, is also referred to as the \emph{target distribution}.
 The basic idea of Metropolis-Hastings, to return to the previously mentioned example of approximating \(I=\int h(x)f(x)dx\), is to construct a Markov chain \(X_0,...,\) with a stationary distribution of \(h\).
 Assuming the sequence has sufficiently many observations, the law of large numbers applies and the following convergence holds.
 \[\frac{1}{N}\sum_{i=0}^{N}w(X_{i})\xrightarrow{P} E(w(X))=I\]
@@ -465,7 +465,7 @@ The Metropolis-Hastings algorithm provides a method for sampling from the \emph{
 Initially, the probability of realizing a state as part of the sampled sequence is skewed, but importantly, over time the sequence will converge.
 Critically, the law of large numbers guarantees that with sufficiently many iterations of Metropolis-Hastings, the generated sequence of states will converge on this stationary distribution.
 Essentially, given some sequence of states \(X_{0},X_{1},...,X_{i}\) from a Markov-Chain, where \(X_{0}\) is chosen arbitrarily, an iteration of Metropolis-Hastings produces the next state to include in the sequence.
-As presented formally in Definition \ref{def:methas}, this is achieved by generating a \emph{proposal} for \(X_{i+1}\) from the \emph{proposal distribution} \(q(y|X_{i})\), transition kernel, and then accepting the proposal with some probability dependent on the relative, target probabilities of the current state \(X_{i}\) and the proposal \citep{Wasserman2004}.
+As presented formally in Definition \ref{def:methas}, this is achieved by generating a \emph{proposal} for \(X_{i+1}\) from the \emph{proposal distribution} \(q(y|X_{i})\) and then accepting the proposal with some probability dependent on the relative, target probabilities of the current state \(X_{i}\) and the proposal \citep{Wasserman2004}.
 \begin{definition}[Metropolis-Hastings MCMC]
 \protect\hypertarget{def:methas}{}{\label{def:methas} \iffalse (Metropolis-Hastings MCMC) \fi{} }\emph{\(X_{i+1}\) is generated given \(X_{0},X_{1},...,X_{i}\) in the following manner:}
 
@@ -476,9 +476,9 @@ As presented formally in Definition \ref{def:methas}, this is achieved by genera
 \end{enumerate}
 \end{definition}
 
-While Metropolis-Hastings may seem appealing because it is both memoryless and able to approximate very complex distributions, its downfall lies in the manual tuning necessary to achieve convergence of the stationary distribution to the target distribution in a reasonable number of iterations.
+While Metropolis-Hastings may seem appealing because it is both memoryless and able to approximate very complex distributions, its downfall lies in the manual tuning of the \emph{step size} parameter necessary to achieve convergence of the stationary distribution to the target distribution in a reasonable number of iterations.
 Recall that Metropolis-Hastings generates proposals by sampling from some distribution.
-In the special case of random walk Metropolis-Hastings, this is a normal distribution centered about \(X_{i}\).
+In the special case of \emph{random walk Metropolis-Hastings}, this is a normal distribution centered about \(X_{i}\).
 Here, the standard deviation of the normal distribution, known as the step size, dictates the relative distance in the sample space between \(X_{i}\) and the generated proposal.
 If the step size is too low, the algorithm will make very small steps and may miss key features of the target distribution, causing the stationary distribution to require a much larger number of iterations to converge on the target distribution.
 On the other hand if the step size is too large, proposals will be overwhelmingly generated from the low-probability tails of the distribution, again resulting in a lack of convergence and poorly representative samples from the stationary distribution.
@@ -491,25 +491,25 @@ Though HMC still requires the user to specify a step size as well as a number of
 Additionally, a proposed extension to HMC called the \emph{No-U-Turn Sampler} (NUTS) automatically determines the number of steps and was empirically demonstrated to perform at least equally as well as standard HMC \citep{Homan2014}.
 The approximation algorithms breifly covered in this chapter underpin modern applications for Bayesian inference, including Stan, which are discussed in the following chapter.
 
-\hypertarget{modern-bayesian-inference-with-stan}{%
-\chapter{Modern Bayesian inference with Stan}\label{modern-bayesian-inference-with-stan}}
+\hypertarget{bayesian-inference-with-stan}{%
+\chapter{Bayesian inference with Stan}\label{bayesian-inference-with-stan}}
 
-Co-founded at Columbia University by Bob Carpenter and Andrew Gelman, Stan is a domain specific programming language that provides tools for specifying, executing and evaluating statistical models.
-Currently comprised of more than 45 core developers from a wide array of educational institutions, private entities, and research organizations, over the past 9 years Stan has grown to become one of the leading options for performing Bayesian inference computationally \citep{Stan2021}.
+Created at Columbia University by Bob Carpenter and Andrew Gelman, Stan is a domain specific programming language that provides tools for specifying, executing and evaluating statistical models.
+Currently comprised of more than 45 core developers from a wide array of educational institutions, private entities, and research organizations, over the past 9 years the Stan project has grown to become one of the leading options for performing Bayesian inference computationally \citep{Stan2021}.
 Among the many capabilities of the Stan language, is the ability to define priors, specify dependencies between variables, and impose known limits on parameters.
-After all model components have been specified, a Stan model compiles to C++ and can then be executed to produce a fit.
+After all model components have been specified, a Stan model compiles first to C++ and then to binary, which can then be executed to produce an estimation of the posterior densities of all parameters, including intermediate ones, obtained through sampling, with accompanying metadata for evaluating the sampling process.
 
 \hypertarget{the-stan-program}{%
 \section{The Stan Program}\label{the-stan-program}}
 
 While Stan is not strictly a tool for Bayesian statistical methods, it is most often used for its efficient MCMC sampler for Bayesian inference.
 In essence, Stan has a sampler that takes a model and creates a separate program which explores the sample space to learn the parameters of interest in the modelling task using what is essentially the previously mentioned NUTS HMC sampling algorithm to generate draws from the poseterior distribution.
-As it is written in C++ and thus produces compiled code, a Stan program is able to take advantage of the full capabilities of the machine on which it is executed.
+As it is written in C++ and thus produces binary code, a Stan program is able to take advantage of the full capabilities of the machine on which it is executed.
 Theoretically, Stan allows computer scientists and statisticians to construct, evaluate, and iterate on extremely complex, hierachical models in one consolidated environment.
 
 A typical Stan program is comprised of several, optional \emph{program blocks}, which provide a general organizational structure to a Stan program and generally allow for the declaration of variables and accompanying statements about those variables.
 Block types include functions, data, transformed data, parameters, transformed prarameters, model, and generated quantities.
-Each of these block types serve a different purpose in a general modelling schema; however no block is required for the Stan compiler to execute, and an empty string is considered a valid Stan program (though it may not produce a very informative model).
+Each of these block types serve a different purpose in a general modelling schema; however no block is required for the Stan compiler to execute, and an empty string is considered a valid Stan program (though it may not yield a very useful model).
 After the program samples the user specified number of iterations and completes execution, a fit object and accompanying summary statistics are produced, which allow for performing post-hoc evaluation such as the posterior predictive check.
 
 \begin{example}

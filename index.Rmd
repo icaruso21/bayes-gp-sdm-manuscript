@@ -31,7 +31,7 @@ library(latex2exp)
 library(extrafont)
 library(rstan)
 library(mdsr)
-#font_import(pattern = "cmu*") 
+font_import(pattern = "Latin Modern Roman*") 
 loadfonts()
 setwd("~/bayes-gp-sdm-manuscript/")
 ```
@@ -348,14 +348,23 @@ p2 <- rbeta(10000, 5, 17)
 delta <- p2 - p1
 delta_df <- data.frame(delta = delta)
 hist <- ggplot(delta_df, aes(x=delta)) + 
-  geom_histogram(colour="black", fill="grey") + #+#, fill="grey") +
+  geom_histogram(colour="black", fill="#856cb0") +
+  theme_mdsr() +
   theme(axis.line = element_line(colour = "black"),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     panel.border = element_blank(),
     panel.background = element_blank(),
-    plot.title = element_blank(),
-    text = element_text(size=15, family="CMU Serif"))
+    plot.title = element_blank())
+  #theme(text = element_text(size=12, 
+  #                          family = "CMU Serif",
+   #                         face = "plain",
+   #                         colour = "black",
+    #                        hjust = 0.5,
+     #                       vjust = 0.5,
+      #                      angle = 0,
+       #                     lineheight = 0.9))
+
 hist
 ```
 
@@ -414,9 +423,9 @@ The approximation algorithms breifly covered in this chapter underpin modern app
 # Bayesian inference with Stan
 
 Created at Columbia University by Bob Carpenter and Andrew Gelman, Stan is a domain specific programming language that provides tools for specifying, executing and evaluating statistical models.
-Currently comprised of more than 45 core developers from a wide array of educational institutions, private entities, and research organizations, over the past 9 years Stan has grown to become one of the leading options for performing Bayesian inference computationally [@Stan2021].
+Currently comprised of more than 45 core developers from a wide array of educational institutions, private entities, and research organizations, over the past 9 years the Stan project has grown to become one of the leading options for performing Bayesian inference computationally [@Stan2021].
 Among the many capabilities of the Stan language, is the ability to define priors, specify dependencies between variables, and impose known limits on parameters.
-After all model components have been specified, a Stan model compiles to C++ and can then be executed to produce a fit.
+After all model components have been specified, a Stan model compiles first to C++ and then to binary, which can then be executed to produce an estimation of the posterior densities of all parameters, including intermediate ones, obtained through sampling, with accompanying metadata for evaluating the sampling process.
 
 ## The Stan Program
 
@@ -427,7 +436,7 @@ Theoretically, Stan allows computer scientists and statisticians to construct, e
 
 A typical Stan program is comprised of several, optional *program blocks*, which provide a general organizational structure to a Stan program and generally allow for the declaration of variables and accompanying statements about those variables.
 Block types include functions, data, transformed data, parameters, transformed prarameters, model, and generated quantities. 
-Each of these block types serve a different purpose in a general modelling schema; however no block is required for the Stan compiler to execute, and an empty string is considered a valid Stan program (though it may not produce a very useful model).
+Each of these block types serve a different purpose in a general modelling schema; however no block is required for the Stan compiler to execute, and an empty string is considered a valid Stan program (though it may not yield a very useful model).
 After the program samples the user specified number of iterations and completes execution, a fit object and accompanying summary statistics are produced, which allow for performing post-hoc evaluation such as the posterior predictive check. 
 ```{r include=FALSE, cache=TRUE}
 sharks = read.csv('./data/florida-shark.csv')
@@ -499,7 +508,7 @@ print(summary(fit, pars=c('alpha', 'beta'))$summary, digits=2)
 ```
 Bob notes that beta, the rate parameter he is interested in understanding, seems to be increasing by nearly 3% each year, although the 97.5% confidence interval of 3.5% causes Bob to wonder how certain he should be in his conclusion about beta. To get a better understanding of the relative frequencies of different samples of the model's parameter values, Bob plots the sample values for each iteration on a histogram, as presented in Figure \@ref(fig:hist).
 ```{r hist, cache=TRUE, comment='', fig.height=3, fig.align='center', echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Histograms displaying frequencies of varying sampled values for parameters alpha and beta"}
-stan_hist(fit, pars=c('alpha', 'beta')) +#, fill="grey") +
+stan_hist(fit, pars=c('alpha', 'beta'), fill = "#856cb0") +#, fill="grey") +
   theme_mdsr() +
   theme(axis.line = element_line(colour = "black"),
     panel.grid.major = element_blank(),
