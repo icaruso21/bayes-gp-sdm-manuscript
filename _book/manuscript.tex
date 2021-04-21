@@ -88,7 +88,7 @@
 \subtitle{Isaac William Caruso}
 \author{Amherst College\\
 Department of Computer Science}
-\date{2021-04-19}
+\date{2021-04-20}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -125,7 +125,7 @@ This chapter then concludes by introducing Bayes' theorem and Bayesian inference
 \section{Random Variables}\label{random-variables}}
 
 Imagine for a moment you are tossing a fair coin.
-There are many experiments you could perform by tossing a coin, but let us consider our quantity of interest to be the fraction of times our coin lands on a tails.
+There are many experiments you could perform by tossing a coin, but let us consider our quantity of interest to be the fraction of times our coin lands on a tail.
 It is clear that the number of tails, the outcome of our experiment, is dependent on the eventual realization of some random process.
 A random variable \(X\) is a variable whose value is dependent on the outcome(s) of a stochastic phenomenon.
 The realized value of \(X\) is denoted as \(x\).
@@ -151,14 +151,14 @@ x & P(X = x)\\
 
 The r.v. \(X\) is is an example of a \emph{discrete random variable}.
 Discrete random variables can only assume discrete values.
-To the contrary, continuous random variables are useful for describing continuous sample spaces.
+On the contrary, continuous random variables are useful for describing continuous sample spaces.
 For example, a continuous random variable may be used to represent the outcome of an experiment measuring blossoming heights of flowers, where the data is a sequence of observations of heights at which different flowers blossomed.
 In this case, the outcome of our blossoming experiment can be any of an infinite number of real values, thus is properly modeled by a continuous random variable.
 
 \hypertarget{cumulative-distribution-functions}{%
 \section{Cumulative Distribution Functions}\label{cumulative-distribution-functions}}
 
-In the previous example we represented the probability of various outcomes of a coin toss experiment in a tabular format.
+In the previous example, we represented the probability of various outcomes of a coin toss experiment in a tabular format.
 Another way to represent this set of probabilities is as a \emph{cumulative distribution function}.
 
 \begin{definition}[Cumulative distribution function 'CDF']
@@ -167,7 +167,7 @@ Another way to represent this set of probabilities is as a \emph{cumulative dist
 \end{definition}
 
 The cumulative distribution function \(F_{X}(x)\) simply represents the probability that a random variable \(X\) takes a value less than or equal to \(x\) for each possible input value of \(x\).
-Figure \ref{fig:cdfimg} depicts a graphical representation of the CDF for our coin tossing experiment.
+Figure \ref{fig:cdfimg} depicts a graphical representation of the CDF for our coin-tossing experiment.
 
 
 
@@ -187,7 +187,7 @@ In the example of a continuous random variable, this function is a left-continuo
 \hypertarget{probability-mass-and-density-functions}{%
 \section{Probability Mass and Density Functions}\label{probability-mass-and-density-functions}}
 
-The probability mass function and probability density function allow us to express probabilities of events over a sample space, and find their use with discrete and continuous random variables respectively.
+The probability mass function and probability density function allow us to express probabilities of events over a sample space and find their use with discrete and continuous random variables respectively.
 
 In the discrete setting, the probability mass function for a random variable \(X\) yields the probability that \(X\) takes a value for every possible value that \(X\) can take.
 
@@ -213,7 +213,7 @@ This formalization of the PDF \(f_X(x)\) allows a natural comparison with the CD
 \[F_X(x) \doteq \int_{-\infty}^{x}f_X(x)dx.\]
 
 Specifically, this implies that \(F'_X(x)=f_X(x)\) for all differentiable points of \(F_X\).
-In plain English this signifies that the derivative of the CDF is the PDF.
+In plain English, this signifies that the derivative of the CDF is the PDF.
 
 \hypertarget{expectation}{%
 \section{Expectation}\label{expectation}}
@@ -269,20 +269,20 @@ E(X) & = \sum_{x}xf(x) \\
 \end{split}\]
 \end{example}
 
-Importantly, while in this case \(E(X)\) corresponds well to the ``peak'' in the PMF, this should not be assumed to be the case unilaterally, as the same expectation would result from any distribution symmetrical about \(x=3\).
+Importantly while in this case, \(E(X)\) corresponds well to the ``peak'' in the PMF, this should not be assumed to be the case unilaterally, as the same expectation would result from any distribution symmetrical about \(x=3\).
 
 \hypertarget{conditional-probability}{%
 \section{Conditional Probability}\label{conditional-probability}}
 
-Conditional probability provides a way to model the probability that an event occurs, given that another event is known to have occured.
-Conditional probability, as presented in Definition \ref{def:condprob}, requires only that the event assumed to have occured, i.e., the event we are \emph{conditioning on}, has a nonzero probability of occuring.
+Conditional probability provides a way to model the probability that an event occurs, given that another event is known to have occurred.
+Conditional probability, as presented in Definition \ref{def:condprob}, requires only that the event assumed to have occurred, i.e., the event we are \emph{conditioning on}, has a nonzero probability of occurring.
 
 \begin{definition}[Conditional Probability]
 \protect\hypertarget{def:condprob}{}{\label{def:condprob} \iffalse (Conditional Probability) \fi{} }\emph{Assuming \(P(B)>0\),}
 \[P(A|B)=\frac{P(A \cap B)}{P(B)}\]
 \end{definition}
 
-Conditional probability asserts that the probability of event A occuring given that event B occurs is equivalent to the probability of both A and B occuring (denoted as \(A \cap B\)) divided by the probability that B occurs. \(P(A|B)\) is not generally equal to \(P(B|A)\)
+Conditional probability asserts that the probability of event A occurring given that event B occurs is equivalent to the probability of both A and B occurring (denoted as \(A \cap B\)) divided by the probability that B occurs. \(P(A|B)\) is not generally equal to \(P(B|A)\)
 For example, the probability that I am swimming given that I am in the water is clearly not the same as the probability that I am in the water given that I am swimming.
 Example \ref{exm:condprobe} explains how to use conditional probability to calculate the probability of rolling a 2 on a 6-sided dice, given I know the outcome of the roll is less than 4.
 
@@ -306,14 +306,14 @@ Being a responsible person, Alice decides she should get tested.
 She receives a test and the accompanying information sheet states the test is 85\% accurate, meaning that 85\% of the time it gives positive results to recipients who are actually positive. The sheet also says that the test yields a false positive 30\% of the time, meaning that if Alice is actually negative she will still receive a positive test 30\% of the time.
 The following day Alice receives a positive test.
 As a student of probability, Alice recognizes that the 85\% accuracy statistic only means the conditional probability that she receives a positive test given she is COVID positive (\(P(+ test|covid+)\)) is 85\%.
-However, Alice is actually interested in the conditional probability that she is positive given she just tested positive, \(P(covid+|test+)\).
+However, Alice is really interested in the conditional probability that she is positive given she just tested positive, \(P(covid+|test+)\).
 As stated in the previous section's discussion of conditional probability, \(P(A|B) \neq P(B|A)\).
 Bayes' theorem, which follows intuitively from the theorem of conditional probability, provides this answer for Alice.
 We can rewrite Definition \ref{def:condprob} as
 \[P(A \cap B)=P(A|B)P(B).\]
-Furthuremore, it can also be stated that
+Furthermore, it can also be stated that
 \[P(B \cap A)=P(B|A)P(A)\]
-Clearly \(P(A \cap B)=P(B \cap A)\), as both terms can be used interchangeably to represent the intersection of two sets A and B.
+Clearly, \(P(A \cap B)=P(B \cap A)\) as both terms can be used interchangeably to represent the intersection of two sets A and B.
 This equivalency means that we can rewrite these equations as
 \[P(B|A)P(A)=P(A|B)P(B)\]
 Dividing both sides of this equivalency by \(P(B)\) yields Bayes' theorem, as formalized in Definition \ref{def:bayestheorem} \citep{Junker2003}.
@@ -350,23 +350,23 @@ P(covid+|test+) & = \frac{P(test+|covid+)P(covid+)}{P(test+|covid-)P(covid-)+P(t
 \hypertarget{bayesian-inference}{%
 \section{Bayesian Inference}\label{bayesian-inference}}
 
-In the previous example, we used Bayes' theorem to evaluate the probability that Alice is COVID positive given she recieved a positive test.
+In the previous example, we used Bayes' theorem to evaluate the probability that Alice is COVID positive given she received a positive test.
 Bayes' theorem provided a way for Alice to apply her prior beliefs about the likelihood of actually being positive to the data she observed---a positive test.
 \emph{Learning}, or \emph{statistical inference}, asks a generalized version of Alice's question.
 Given some data \(X_0,...,X_i \sim D\), how can we infer the distribution \(D\) that generated the data \(X_0,...,X_i\) \citep[ \text{Sec} 6.1]{Wasserman2004}?
-Additionally as distributions are functions of parameters \(\theta_0, ..., \theta_j\), estimating these parameters given the data is one avenue for inferring \(D\).
+Additionally, as distributions are functions of parameters \(\theta_0, ..., \theta_j\), estimating these parameters given the data is one avenue for inferring \(D\).
 \emph{Bayesian inference} applies Bayes' theorem to the task of statistical inference in an intuitive manner, which by definition maintains the inherent uncertainty in inference.
 Contrary to the frequentist perspective, a Bayesian approach to inference expresses degrees of belief by producing posterior probability distributions for the parameters \(\theta_0, ..., \theta_j\) of the distribution \citep[ \text{Sec} 11.1]{Wasserman2004}.
 Point estimates and confidence/posterior intervals can then be computed with a post hoc analysis of the posterior distribution.
-Furthermore, a Bayesian approach to inference explicitly includes previous domain specific knowledge (or lack thereof) in the learning process.
+Furthermore, a Bayesian approach to inference explicitly includes previous domain-specific knowledge (or lack thereof) in the learning process.
 Performing Bayesian inference to compute a posterior distribution \(P(\theta|X)\) for a parameter \(\theta\) first requires choosing a \emph{prior probability distribution} \(P(\theta)\) with a PDF \(f(\theta)\) which expresses our prior beliefs about \(\theta\) before observing any data.
 In the previous example, this was Alice's previous belief about the probability of contracting COVID from any given exposure.
-Experessing \(P(\theta)\) as a distribution allows for the inclusion of the inherent uncertainty of Alice's preconceptions in the modelling schema and thus the computation of the posterior.
-Secondly, the likelihod function \(l(X|\theta)\) must be specified to express our understanding of the probability of the data given a particular value of \(\theta\).
+Expressing \(P(\theta)\) as a distribution allows for the inclusion of the inherent uncertainty of Alice's preconceptions in the modeling schema and thus the computation of the posterior.
+Secondly, the likelihood function \(l(X|\theta)\) must be specified to express our understanding of the probability of the data given a particular value of \(\theta\).
 In the case of Alice's inquiry, a binomial likelihood function would be appropriate as it represents the likelihood of observing a given number of successes (\(+\)tests) in \(0 \lor 1\) (\(+ \lor -\)) trials.
 The final step in performing Bayesian inference is repeatedly applying Bayes' theorem to update the probability distribution of \(\theta\) for each observation \(X_n\) in the data \(n \in (0,i)\), resulting in a posterior distribution \(f(\theta|X_0,...,X_i)\).
 This is done by iteratively evaluating Bayes' theorem, where the posterior for the \(n-1^{th}\) iteration is the prior for the \(n^{th}\) iteration.
-Bayesian inference relies on Bayes' theorem for continuous variables, which utilizes density functions as presented in formally Definition \ref{def:bayesprob}.
+Bayesian inference relies on Bayes' theorem for continuous variables, which utilizes density functions as presented formally in Definition \ref{def:bayesprob}.
 
 \begin{definition}[Bayes' Theorem for Continuous Variables]
 \protect\hypertarget{def:bayesprob}{}{\label{def:bayesprob} \iffalse (Bayes' Theorem for Continuous Variables) \fi{} }\emph{Assuming \(f(X)>0\),}
@@ -378,30 +378,30 @@ In this case, the marginal likelihood \(f(X)\) functions only to normalize the p
 meaning that intuitively, the posterior is proportional to the likelihood times the prior.
 
 While Bayesian inference is an appealing schema, learning the parameters of real-world models using this technique requires the use of efficient algorithms to be computationally feasible.
-As previously mentioned, depending on the system we may be interested in evaulating an arbitrary number parameters \(\theta_0, ..., \theta_j\) given the data, and each parameter may potentially take on an infinite number of values.
-Even in the case where we only consider a small number of possible values \(a\) for every \(\theta_i \in (0,j)\), the evaluation of the posterior to perform a single update rapidly becomes a computationally intractible task.
+As previously mentioned, depending on the system we may be interested in evaluating an arbitrary number of parameters \(\theta_0, ..., \theta_j\) given the data, and each parameter may potentially take on an infinite number of values.
+Even in the case where we only consider a small number of possible values \(a\) for every \(\theta_i \in (0,j)\), the evaluation of the posterior to perform a single update rapidly becomes a computationally intractable task.
 This is evidenced by the runtime of the \emph{grid approximation} or \emph{direct discrete approximation}, which is proportional to \(O(a^{j})\), where \(a\) controls the granularity of the approximation \citep[ \text{Sec} 10.1]{Gelman2013}.
-In order to perform Bayesian inference on complex systems, fast algorithms are necessary to circumnavigate this curse of dimensionality.
+To perform Bayesian inference on complex systems, fast algorithms are necessary to circumnavigate this curse of dimensionality.
 
 \hypertarget{algorithms-for-bayesian-inference}{%
 \chapter{Algorithms for Bayesian inference}\label{algorithms-for-bayesian-inference}}
 
 When performing Bayesian inference, fast algorithms are necessary for updating the probability distributions of parameters of interest in a computationally feasible manner.
-In modelling scenarios with multiple parameters forming a multidimensional parameter space, evaluating parameters at even a relatively small number of possible values rapidly becomes intractible, as a product of the curse of dimensionality.
+In modeling scenarios with multiple parameters forming a multidimensional parameter space, evaluating parameters at even a relatively small number of possible values rapidly becomes intractable, as a product of the curse of dimensionality.
 This problem is further exaggerated in the evaluation of hierarchical models, which are of particular interest in many application domains such as biology, economics, chemistry, and physics.
 Here we discuss Markov Chain Monte Carlo (MCMC) based sampling algorithms, which allow for efficiently sampling from approximations of probability distributions.
 Markov Chain Monte Carlo (MCMC) provides a methodology for sampling from the posterior curve to perform a Bayesian update.
 Simply put, if we make some sequence of draws \(\theta_1,...,\theta_j\) from the posterior \(p(\theta|X)\), then plotting \(\theta_1,...,\theta_j\) as a histogram will provide an approximation of \(p(\theta|X)\) \citep[ \text{Sec} 11.4]{Wasserman2004}.
-Due to the law of large numbers, this approximation can be used in lieu of the posterior in post-hoc analysis.
+Due to the law of large numbers, this approximation can be used in place of the posterior in post-hoc analysis.
 We first provide a theoretical background into Monte Carlo approximation and Markov Chains, followed by a discussion of \emph{Metropolis-Hastings}, an algorithm for performing MCMC.
 
 \hypertarget{monte-carlo-approximation}{%
 \section{Monte Carlo Approximation}\label{monte-carlo-approximation}}
 
-Monte Carlo approximation provides a convient method for estimating quantities of interest.
+Monte Carlo approximation provides a convenient method for estimating quantities of interest.
 This schema will allow for drawing samples from arbitrarily complex probability distributions.
 The basic example is Monte Carlo \emph{integration} \citep[ \text{Sec} 24.2]{Wasserman2004}.
-If we want to evaulate an integral for some function \(f(x)\), where
+If we want to evaluate an integral for some function \(f(x)\), where
 \[I=\int_{a}^{b}f(x)dx \textrm{ ,}\]
 we can approximate \(I\) using Monte Carlo approximation. \(f(x)\) can be alternatively expressed as two functions, \(h(x)\) and \(w(x)\), where \(h(x)=\frac{1}{b-a}\) and \(w(x)=f(x)(b-a)\) as follows.
 \[I=\int_{a}^{b}f(x)dx=\int_{a}^{b}w(x)h(x)dx\]
@@ -416,9 +416,9 @@ As we will expand on in the following sections, this algorithmic framework is pa
 
 \begin{example}
 \protect\hypertarget{exm:montecarl}{}{\label{exm:montecarl} }Suppose we have two binomially distributed r.vs---\(X \sim Binom(n,p_1)\), \(Y \sim Binom(m,p_2)\)---and want to evaluate \(\delta = p_2 - p_1\).
-This problem can be analyzed using Bayesian inference on a beta-binomial model, but would require evaluating complex integrals over the joint posterior of \(X\) and \(Y\) to obtain the density.
+This problem can be analyzed using Bayesian inference on a beta-binomial model but would require evaluating complex integrals over the joint posterior of \(X\) and \(Y\) to obtain the density.
 Monte Carlo Integration allows for estimating an integral using repeated sampling from the two independent posterior densities---\(P_1\) and \(P_2\)--- and plotting samples using a histogram provides a qualitative estimate for the parameter of interest, \(\delta\) \citep{Wasserman2004}.
-In simplest terms the beta prior distribution \(Beta(\alpha, \beta)\) (the proper conjugate prior for the binomial likelihood) could be a flat prior \(\alpha = \beta = 1\), on the parameters \(p_1\) and \(p_2\) \citep{Bloom2014}.
+In simplest terms, the beta prior distribution \(Beta(\alpha, \beta)\) (the proper conjugate prior for the binomial likelihood) could be a flat prior \(\alpha = \beta = 1\), on the parameters \(p_1\) and \(p_2\) \citep{Bloom2014}.
 \(f(p_1,p_2|X,Y)=f(p_1|X)f(p_2|Y)\), because the two posteriors \(f(p_1|X)\) and \(f(p_2|Y)\) are conditionally independent given the data.
 Thus the resultant posteriors are beta distributions, as follows \citep{Bloom2014}.
 \[D_1 = Beta(X+1,n-X+1)\]
@@ -434,7 +434,7 @@ To provide a concrete example, if the number of trials is 20, \(n=m=20\), \(X = 
 
 }
 
-\caption{Histogram displaying displaying posterior of delta from Monte Carlo integration}\label{fig:mon}
+\caption{Histogram displaying posterior of delta from Monte Carlo integration}\label{fig:mon}
 \end{figure}
 
 \hypertarget{markov-chains}{%
@@ -456,7 +456,7 @@ A Markov chain is often represented as a directed, weighted graph where possible
 
 \emph{Metropolis-Hastings MCMC} is a standard algorithm for sampling from the posterior distribution to perform a Bayesian update.
 While it is not always the fastest in practice and requires manual tuning to work effectively, Metropolis-Hastings provides a foundation for more complex algorithms such as \emph{Hamiltonian Monte Carlo} \citep{Brooks2011} with \emph{No-U-Turn sampling} \citep{Homan2014}.
-To reiterate, the purpose of sampling in Bayesian inference is to draw from the posterior density with a goal of estimating \(P(\theta|data)\) for parameters \(\theta\).
+To reiterate, the purpose of sampling in Bayesian inference is to draw from the posterior density to estimate \(P(\theta|data)\) for parameters \(\theta\).
 The Bayesian posterior \(P(\theta|data)\), for the purposes of MCMC, is also referred to as the \emph{target distribution}.
 The basic idea of Metropolis-Hastings, to return to the previously mentioned example of approximating \(I=\int h(x)f(x)dx\), is to construct a Markov chain \(X_0,...,\) with a stationary distribution of \(h\).
 Assuming the sequence has sufficiently many observations, the law of large numbers applies and the following convergence holds.
@@ -481,21 +481,21 @@ Recall that Metropolis-Hastings generates proposals by sampling from some distri
 In the special case of \emph{random walk Metropolis-Hastings}, this is a normal distribution centered about \(X_{i}\).
 Here, the standard deviation of the normal distribution, known as the step size, dictates the relative distance in the sample space between \(X_{i}\) and the generated proposal.
 If the step size is too low, the algorithm will make very small steps and may miss key features of the target distribution, causing the stationary distribution to require a much larger number of iterations to converge on the target distribution.
-On the other hand if the step size is too large, proposals will be overwhelmingly generated from the low-probability tails of the distribution, again resulting in a lack of convergence and poorly representative samples from the stationary distribution.
+On the other hand, if the step size is too large, proposals will be overwhelmingly generated from the low-probability tails of the distribution, again resulting in a lack of convergence and poorly representative samples from the stationary distribution.
 While some methods have been proposed for automatically tuning the step size parameter \citep{Graves2011}, iterating on complex, Bayesian models to tune a parameter is not particularly efficient nor computationally feasible in many cases.
 For this reason, other approximation algorithms are used in practical implementations of Bayesian inference.
-One such algorithm, \emph{Hamiltonian Monte Carlo} (HMC), relies on theorhetical physics to compute a latent momentum variable which is applied to a hamiltonian, effectively simulating a ball rolling around the multi-dimensional sample space \citep{Brooks2011}.
+One such algorithm, \emph{Hamiltonian Monte Carlo} (HMC), relies on theoretical physics to compute a latent momentum variable that is applied to a hamiltonian, effectively simulating a ball rolling around the multi-dimensional sample space \citep{Brooks2011}.
 Despite the increased computational cost, this method is appealing because of its ability to generate proposals from distant regions of the stationary distribution with high acceptance probabilities.
 This means that in practice, the HMC algorithm's stationary distribution converges on the target distribution with far fewer iterations than traditional Metropolis-Hastings implementations.
 Though HMC still requires the user to specify a step size as well as a number of steps to move the hamiltonian before considering a proposal, in practice it is much more efficient and requires fewer iterations on a model.
 Additionally, a proposed extension to HMC called the \emph{No-U-Turn Sampler} (NUTS) automatically determines the number of steps and was empirically demonstrated to perform at least equally as well as standard HMC \citep{Homan2014}.
-The approximation algorithms breifly covered in this chapter underpin modern applications for Bayesian inference, including Stan, which are discussed in the following chapter.
+The approximation algorithms briefly covered in this chapter underpin modern applications for Bayesian inference, including Stan, which are discussed in the following chapter.
 
 \hypertarget{bayesian-inference-with-stan}{%
 \chapter{Bayesian inference with Stan}\label{bayesian-inference-with-stan}}
 
-Created at Columbia University by Bob Carpenter and Andrew Gelman, Stan is a domain specific programming language that provides tools for specifying, executing and evaluating statistical models.
-Currently comprised of more than 45 core developers from a wide array of educational institutions, private entities, and research organizations, over the past 9 years the Stan project has grown to become one of the leading options for performing Bayesian inference computationally \citep{Stan2021}.
+Created at Columbia University by Bob Carpenter and Andrew Gelman, Stan is a domain-specific programming language that provides tools for specifying, executing, and evaluating statistical models.
+Currently comprised of more than 45 core developers from a wide array of educational institutions, private entities, and research organizations, over the past nine years the Stan project has grown to become one of the leading options for performing Bayesian inference computationally \citep{Stan2021}.
 Among the many capabilities of the Stan language, is the ability to define priors, specify dependencies between variables, and impose known limits on parameters.
 After all model components have been specified, a Stan model compiles first to C++ and then to binary, which can then be executed to produce an estimation of the posterior densities of all parameters, including intermediate ones, obtained through sampling, with accompanying metadata for evaluating the sampling process.
 
@@ -503,18 +503,18 @@ After all model components have been specified, a Stan model compiles first to C
 \section{The Stan Program}\label{the-stan-program}}
 
 While Stan is not strictly a tool for Bayesian statistical methods, it is most often used for its efficient MCMC sampler for Bayesian inference.
-In essence, Stan has a sampler that takes a model and creates a separate program which explores the sample space to learn the parameters of interest in the modelling task using what is essentially the previously mentioned NUTS HMC sampling algorithm to generate draws from the poseterior distribution.
-As it is written in C++ and thus produces binary code, a Stan program is able to take advantage of the full capabilities of the machine on which it is executed.
-Theoretically, Stan allows computer scientists and statisticians to construct, evaluate, and iterate on extremely complex, hierachical models in one consolidated environment.
+In essence, Stan has a sampler that takes a model and creates a separate program that explores the sample space to learn the parameters of interest in the modeling task using what is essentially the previously mentioned NUTS HMC sampling algorithm to generate draws from the posterior distribution.
+As it is written in C++ and thus produces binary code, a Stan program can take advantage of the full capabilities of the machine on which it is executed.
+Theoretically, Stan allows computer scientists and statisticians to construct, evaluate, and iterate on extremely complex, hierarchical models in one consolidated environment.
 
 A typical Stan program is comprised of several, optional \emph{program blocks}, which provide a general organizational structure to a Stan program and generally allow for the declaration of variables and accompanying statements about those variables.
-Block types include functions, data, transformed data, parameters, transformed prarameters, model, and generated quantities.
-Each of these block types serve a different purpose in a general modelling schema; however no block is required for the Stan compiler to execute, and an empty string is considered a valid Stan program (though it may not yield a very useful model).
-After the program samples the user specified number of iterations and completes execution, a fit object and accompanying summary statistics are produced, which allow for performing post-hoc evaluation such as the posterior predictive check.
+Block types include functions, data, transformed data, parameters, transformed parameters, model, and generated quantities.
+Each of these block types serves a different purpose in a general modeling schema; however no block is required for the Stan compiler to execute, and an empty string is considered a valid Stan program (though it may not yield a very useful model).
+After the program samples the user-specified number of iterations and completes execution, a fit object and accompanying summary statistics are produced, which allow for performing post-hoc evaluation such as the posterior predictive check.
 
 \begin{example}
-\protect\hypertarget{exm:stan}{}{\label{exm:stan} }Bob, a marine biologist at Florida Fish and Wildlife, studys shifting patterns in encounters between humans and large marine wildlife.
-After seeing a local news headline about a recent string of shark attacks in his town, Bob became interested in trying to determine if the rate of shark attacks from year to year in Florida is changing. To do this, Bob decides to use Bayesian inference to compute a Poisson regression for a dataset of shark attack counts each year in Florida \citep{Collier2018}. Bayesian poisson regression models are useful for learning parameters that take the form of a count per unit time or space. Specifically, in a poisson regression scenario, the data \(X_0,...,X_n\) are Poisson(\(\lambda\)), thus the prior distribution (the conjugate prior of the Poisson) is a gamma distribution with shape \(\alpha\) and rate \(\beta\) parameters \citep{Hitchcock2014}. The data takes the following form:
+\protect\hypertarget{exm:stan}{}{\label{exm:stan} }Bob, a marine biologist at Florida Fish and Wildlife, studies shifting patterns in encounters between humans and large marine wildlife.
+After seeing a local news headline about a recent string of shark attacks in his town, Bob became interested in trying to determine if the rate of shark attacks from year to year in Florida is changing. To do this, Bob decides to use Bayesian inference to compute a Poisson regression for a dataset of shark attack counts each year in Florida \citep{Collier2018}. Bayesian Poisson regression models are useful for learning parameters that take the form of a count per unit of time or space. Specifically, in a Poisson regression scenario, the data \(X_0,...,X_n\) are Poisson(\(\lambda\)), thus the prior distribution (the conjugate prior of the Poisson) is a gamma distribution with shape \(\alpha\) and rate \(\beta\) parameters \citep{Hitchcock2014}. The data takes the following form:
 \end{example}
 
 \begin{verbatim}
@@ -539,11 +539,11 @@ parameters {
     real beta;}                  # Rate parameter
 model {
     beta ~ normal(0.015, 0.015); # Placing a normal prior on beta
-    for (n in 1:N) # Every count modelled by a log-link with a linear combination
+    for (n in 1:N) # Every count modeled by a log-link with a linear combination
         attacks[n] ~ poisson_log(log(population[n]) + alpha + beta * year[n]);}
 \end{verbatim}
 
-Here, the data block is used to specify the type and quantity of data to be processed by the model. While \(N\) could be replaced with an actual integer, keeping fields of this type allows for models to be more flexible and require less changes. Additionally, the parameters block is used to declare the model's parameters, which correspond directly to the variables Stan will sample at run time \citep[ \text{Sec} 8.1]{StanManual2016}. Finally, the model parameter is used to define the model, which includes the specification of any custom priors and the overall model formulae. In this case, Bob put a \(normal(0.015,0.015)\) prior on beta to include into the model his domain specific assumption that shark attacks are occuring at increasing rates each year---specifically, that this rate is increasing at about 1.5\% each year. After specifying the model, Bob uses the Stan compiler to compile his code and then executes it to sample his model. After his model has finished sampling, Bob first takes a look at the summary statistics.
+Here, the data block is used to specify the type and quantity of data to be processed by the model. While \(N\) could be replaced with an actual integer, keeping fields of this type allows for models to be more flexible and require fewer changes. Additionally, the parameters block is used to declare the model's parameters, which correspond directly to the variables Stan will sample at run time \citep[ \text{Sec} 8.1]{StanManual2016}. Finally, the model parameter is used to define the model, which includes the specification of any custom priors and the overall model formulae. In this case, Bob put a \(normal(0.015,0.015)\) prior on beta to include into the model his domain-specific assumption that shark attacks are occurring at increasing rates each year---specifically, that this rate is increasing at about 1.5\% each year. After specifying the model, Bob uses the Stan compiler to compile his code and then executes it to sample his model. After his model has finished sampling, Bob first takes a look at the summary statistics.
 
 \begin{verbatim}
         mean se_mean     sd    2.5%     25%    50%     75%   97.5% n_eff Rhat
@@ -573,22 +573,53 @@ The final analysis step for Bob's Bayesian model is ensuring the chains mixed pr
 \caption{Each chain represents a sequence of states sampled from the posterior for parameters alpha and beta. Four chains were sampled for this model, and this trace plot is a qualitative method for determining if the sample space for each parameter was sufficiently explored. Here, the sampled value of each parameter (y-axis) is plotted for every iteration Stan evaluated. In this case, Bob specified 2000 total iterations and 1000 burn in iterations, so the first 1000 samples were discarded and not included in the posterior or the trace.}\label{fig:trace}
 \end{figure}
 
-As it is clear the chains mixed well, Bob is now relatively confident in the results his model is producing. While he does trust the samples evaluated by his model and his analysis of Figure \ref{fig:hist}---that the rate of shark attacks is indeed increasing in Florida by some amount---the general lack of concentrated density in both histograms leads Bob to determine that he should collect more data and continue sampling his fit in an attempt to gain a better understanding of preciesly how much shark attacks are increasing each year.
-Stan, and more generally Bayesian inference, is a good option for a task like this, because Bob can simply collect more data and continue training this model with his new data, without the need to start the fitting process over again.
+As it is clear the chains mixed well, Bob is now relatively confident in the results his model is producing. While he does trust the samples evaluated by his model and his analysis of Figure \ref{fig:hist}---that the rate of shark attacks is indeed increasing in Florida by some amount---the general lack of concentrated density in both histograms leads Bob to determine that he should collect more data and continue sampling his fit in an attempt to gain a better understanding of precisely how much shark attacks are increasing each year.
+Stan, and more generally Bayesian inference, is a good option for a task like this because Bob can simply collect more data and continue training this model with his new data, without the need to start the fitting process over again.
 
 \hypertarget{why-stan}{%
 \section{Why Stan?}\label{why-stan}}
 
-According to Andrew Gelman, a well known Bayesian statistician at Columbia University, and associates the motivation behind devloping STAN was to addess several shortcomings in other technologies for performing Bayesian inference, which made these alternatives impractical for learning large, complex systems \citep{Gelman2015}.
+According to Andrew Gelman, a well-known Bayesian statistician at Columbia University, and associates, the motivation behind developing STAN was to address several shortcomings in other technologies for performing Bayesian inference, which made these alternatives impractical for learning large, complex systems \citep{Gelman2015}.
 The four main shortcomings of previous software Stan's developers aimed to address were flexibility (being able to fit any given model), ease of use/ user programming time, run time, and scalability to larger datasets and more complex models \citep{Gelman2015}.
 Compared to two of its most direct predecessors, Jags and Bugs, STAN is generally more flexible although notably it cannot handle discrete parameters while both Jags and Bugs can.
 Stan was demonstrated to be both faster and scale better for complex models than Bugs and Jags, which the developers contribute to general efficiency in implementation, use of memory management, and most importantly the advanced MCMC algorithm STAN employs \citep{Gelman2015}.
 Stan's use of HMC \citep{Brooks2011} and a slightly modified No-U-Turn sampler \citep{Homan2014}, means that it often provides large efficiency boosts compared to conventional solutions using Metropolis-Hastings or Gibbs sampling (Bugs and Jags).\\
 In one example, the authors demonstrated that Stan can sample a hierarchical logistic regression model of a large dataset approximately twice as fast as Jags and produce an effective sample size of nearly four times its predecessor \citep{Gelman2015}.
-While it is highly performant compared to previous options, Stan's overall performance is strongly dependent on the joint posterior of all parameters, and as we will elaborate upon in following chapters can struggle to sample big datasets with numerous \emph{gaussian processes} \citep{Gelman2015}.
+While it is highly performant compared to previous options, Stan's overall performance is strongly dependent on the joint posterior of all parameters, and as we will elaborate upon in the following chapter can struggle to sample big datasets with numerous \emph{gaussian processes} \citep{Gelman2015}.
 
-\hypertarget{bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes}{%
-\chapter{Bayesian applications in Biology: Hybrid species distribution modelling with gaussian processes}\label{bayesian-applications-in-biology-hybrid-species-distribution-modelling-with-gaussian-processes}}
+\hypertarget{bayesian-applications-in-biology-hybrid-species-distribution-modeling-through-bayesian-inference}{%
+\chapter{Bayesian applications in Biology: Hybrid species distribution modeling through Bayesian inference}\label{bayesian-applications-in-biology-hybrid-species-distribution-modeling-through-bayesian-inference}}
+
+In the field of biology and ecology, predicting the presence or absence of animal species in varying locations is a topic of much interest and critical importance for a variety of reasons.
+As climate change accelerates the shifting of species' ranges \citep[\citet{Steinbauer2018}]{Parmesan2003}, understanding the dynamics of these shifts and predicting future ranges will aid researchers in understanding how best to preserve global biodiversity.
+Currently, there are two main approaches for constructing \emph{species distribution models} (SDMs)---correlative models and mechanistic models \citep[\citet{Kotta2019}]{Buckley2010}.
+Mechanistic models utilize explicit relationships between environmental variables and species' behaviors/ tolerances as a means for estimating species prevalence in different locations \citep[\citet{Kotta2019}]{Buckley2010}.
+Correlative models, on the other hand, draw estimations by relating species' occurrences to environmental conditions in a particular area at the same time \citep[\citet{Kotta2019}]{Buckley2010}.
+In their review, \citet{Buckley2010} compared predictions from several correlative and mechanistic models of the current and future distributions of two species---\emph{Atalopedes campestris}, a skipper butterfly, and \emph{Sceloporus undulatus}, a fence lizard.
+Both model types performed similarly in predicting current distributions in previously unobserved locations, though the mechanistic models generally forecasted a larger future range shift in response to climate change.
+While many researchers believe that correlative models have much potential for forecasting species distributions, it is becoming increasingly clear that a somewhat mechanistic approach is necessary for understanding the limits and intricacies of these ranges \citep{Kearney2006}.
+As a result, a variety of hybrid modeling schemas have been proposed for incorporating domain-specific knowledge about the degree of species' tolerances to different environmental variables into the mechanistic modeling schema \citep[\citet{Kearney2006}]{Buckley2010}.
+
+Recently, novel methods for building hybrid SDMs using Bayesian inference with \emph{Gaussian processes} (GPs) have been proposed as a means for combining \emph{a priori} biological knowledge regarding the physical tolerance limits of species to environmental conditions with distributional data aimed at elucidating the natural variability in niche-specific environmental conditions \citep{Kotta2019}.
+As previously mentioned, Bayesian inference allows for incorporating prior knowledge into the learning schema in an intuitive manner using informative priors.
+Furthermore, placing priors on Gaussian processes takes advantage of the underlying flexibility of GPs, a distribution of all possible functions over a sample space with arbitrarily many dimensions.
+
+\hypertarget{experimental-design}{%
+\section{Experimental design}\label{experimental-design}}
+
+The authors used two species native to the Baltic Sea region in a case study evaluating the efficacy of Bayesian inference as a tool for distribution modeling---\emph{Fucus vesiculosus}, a microalgae, and \emph{Idotea balthica}, a herbivore.
+The authors performed this learning task in MATLAB, a proprietary programming language, using the GPStuff package \citep{Vanhatalo2015}, which was developed by one of the authors, Jarno Vanhatalo.
+We attempted to replicate the authors' findings using the Stan programming language for two main reasons---to validate their findings and to evaluate the feasibility of constructing a complex, hierarchical model, which makes heavy use of GPs, in Stan.
+
+The authors modeled the occurrence of each species with three separate methodologies, which were subsequently compared in both interpolation and extrapolation scenarios for accuracy.
+First, the occurrence (\emph{biomass}) of each species was modeled using experimental data collected in a laboratory experiment wherein \emph{F. vesiculosus} and \emph{I. balthica} were reared in varying environmental conditions, and their survival/biomass were recorded for later use.
+Additionally, the biomass of each species was modeled using distributional data combined from several sources sampled from June to August from 2005 to 2015.
+Altogether, the distributional dataset features Biomass records from quantitative samples collected using a sieve from 6407 stations around the Baltic Sea.
+The corresponding data for environmental variables (temperature and salinity) was sourced from the Swedish Meteorological and Hydrological Institute (SMHI) using the echam5/RCAO model and covers the entirety of the Baltic Sea at a grid resolution of 2 NM \citep{Meier2012}.
+Geospatial data (depth) was ascertained from the Baltic Sea Bathymetry Database \citep{Bath2021}.
+Finally, a combined \emph{hurdle model} was constructed to model both experimental and distributional data together.
+A hurdle model is a class of models where the probability of a random variable \(Y\) attaining 0 is modeled separately from the probability of attaining a non-zero value \citep[ \text{Sec } 5.6]{StanManual2016}.
+All data used in our replication of \citet{Kotta2019} was ascertained directly from Jonne Kotta and Jarno Vanhatalo and can be made available upon request.
 
   \bibliography{references.bib,packages.bib}
 

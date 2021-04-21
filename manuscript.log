@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.28)  19 APR 2021 18:38
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.28)  20 APR 2021 19:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -929,7 +929,7 @@ File: manuscript_files/figure-latex/mon-1.pdf Graphic file (type pdf)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [19] [20]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 7362) has occurred while \output is active []
 
 [21] [22] [23] [24
 
@@ -960,9 +960,9 @@ Overfull \hbox (12.28455pt too wide) in paragraph at lines 527--527
  []
 
 
-Overfull \hbox (30.82484pt too wide) in paragraph at lines 544--544
-[]    \TU/lmtt/m/n/12 for (n in 1:N) # Every count modelled by a log-link with 
-a linear combination[] 
+Overfull \hbox (24.64484pt too wide) in paragraph at lines 544--544
+[]    \TU/lmtt/m/n/12 for (n in 1:N) # Every count modeled by a log-link with a
+ linear combination[] 
  []
 
 
@@ -995,21 +995,34 @@ File: manuscript_files/figure-latex/trace-1.pdf Graphic file (type pdf)
 <use manuscript_files/figure-latex/trace-1.pdf>
 [28] [29] [30]
 Chapter 4.
-(./manuscript.bbl [31
+[31
 
-] [32
+] [32]
 
-] [33]) [34] (./manuscript.aux)
+Package natbib Warning: Citation `Meier2012' on page 33 undefined on input line
+ 618.
+
+
+Package natbib Warning: Citation `Bath2021' on page 33 undefined on input line 
+619.
+
+(./manuscript.bbl [33] [34
+
+] [35])
+
+Package natbib Warning: There were undefined citations.
+
+[36] (./manuscript.aux)
 Package rerunfilecheck Info: File `manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: E3DC861C4E36428907E6BD8E47069CB8;3065.
+(rerunfilecheck)             Checksum: DDED25C3F1DCA3B993E299B0D4DF00B9;3228.
  ) 
 Here is how much of TeX's memory you used:
- 16906 strings out of 478922
- 298098 string characters out of 5865756
- 777513 words of memory out of 5000000
- 36520 multiletter control sequences out of 15000+600000
+ 16926 strings out of 478922
+ 298486 string characters out of 5865756
+ 777752 words of memory out of 5000000
+ 36540 multiletter control sequences out of 15000+600000
  409867 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 98i,16n,122p,1072b,452s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 98i,16n,122p,1074b,450s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on manuscript.pdf (34 pages).
+Output written on manuscript.pdf (36 pages).
