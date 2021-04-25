@@ -7,12 +7,28 @@
   url = {https://www.R-project.org/},
 }
 
+@Manual{R-bayesplot,
+  title = {bayesplot: Plotting for Bayesian Models},
+  author = {Jonah Gabry and Tristan Mahr},
+  year = {2020},
+  note = {R package version 1.7.2},
+  url = {https://mc-stan.org/bayesplot},
+}
+
 @Manual{R-bookdown,
   title = {bookdown: Authoring Books and Technical Documents with R Markdown},
   author = {Yihui Xie},
   year = {2020},
   note = {R package version 0.21},
   url = {https://github.com/rstudio/bookdown},
+}
+
+@Manual{R-brms,
+  title = {brms: Bayesian Regression Models using Stan},
+  author = {Paul-Christian Bürkner},
+  year = {2020},
+  note = {R package version 2.13.0},
+  url = {https://CRAN.R-project.org/package=brms},
 }
 
 @Manual{R-dplyr,
@@ -37,6 +53,14 @@
   year = {2020},
   note = {R package version 0.5.0},
   url = {https://CRAN.R-project.org/package=forcats},
+}
+
+@Manual{R-formatR,
+  title = {formatR: Format R Code Automatically},
+  author = {Yihui Xie},
+  year = {2021},
+  note = {R package version 1.9},
+  url = {https://github.com/yihui/formatR},
 }
 
 @Manual{R-ggformula,
@@ -69,6 +93,14 @@
   year = {2021},
   note = {R package version 4.2.4},
   url = {https://github.com/jrnold/ggthemes},
+}
+
+@Manual{R-ICON,
+  title = {ICON: Provides Easy Access to Complex Systems Datasets},
+  author = {Raoul Wadhwa and Jacob Scott},
+  year = {2020},
+  note = {R package version 0.4.0},
+  url = {https://rrrlw.github.io/ICON/},
 }
 
 @Manual{R-kableExtra,
@@ -143,6 +175,14 @@
   url = {https://CRAN.R-project.org/package=purrr},
 }
 
+@Manual{R-Rcpp,
+  title = {Rcpp: Seamless R and C++ Integration},
+  author = {Dirk Eddelbuettel and Romain Francois and JJ Allaire and Kevin Ushey and Qiang Kou and Nathan Russell and Douglas Bates and John Chambers},
+  year = {2020},
+  note = {R package version 1.0.5},
+  url = {https://CRAN.R-project.org/package=Rcpp},
+}
+
 @Manual{R-readr,
   title = {readr: Read Rectangular Text Data},
   author = {Hadley Wickham and Jim Hester and Romain Francois},
@@ -173,6 +213,14 @@
   year = {2020},
   note = {R package version 2.21.2},
   url = {https://CRAN.R-project.org/package=rstan},
+}
+
+@Manual{R-shiny,
+  title = {shiny: Web Application Framework for R},
+  author = {Winston Chang and Joe Cheng and JJ Allaire and Yihui Xie and Jonathan McPherson},
+  year = {2020},
+  note = {R package version 1.4.0.2},
+  url = {http://shiny.rstudio.com},
 }
 
 @Manual{R-StanHeaders,
@@ -215,6 +263,17 @@
   url = {https://CRAN.R-project.org/package=tidyverse},
 }
 
+@Article{bayesplot2019,
+  title = {Visualization in Bayesian workflow},
+  author = {Jonah Gabry and Daniel Simpson and Aki Vehtari and Michael Betancourt and Andrew Gelman},
+  year = {2019},
+  journal = {J. R. Stat. Soc. A},
+  volume = {182},
+  issue = {2},
+  pages = {389-402},
+  doi = {10.1111/rssa.12378},
+}
+
 @Book{bookdown2016,
   title = {bookdown: Authoring Books and Technical Documents with {R} Markdown},
   author = {Yihui Xie},
@@ -223,6 +282,30 @@
   year = {2016},
   note = {ISBN 978-1138700109},
   url = {https://github.com/rstudio/bookdown},
+}
+
+@Article{brms2017,
+  title = {{brms}: An {R} Package for {Bayesian} Multilevel Models Using {Stan}},
+  author = {Paul-Christian Bürkner},
+  journal = {Journal of Statistical Software},
+  year = {2017},
+  volume = {80},
+  number = {1},
+  pages = {1--28},
+  doi = {10.18637/jss.v080.i01},
+  encoding = {UTF-8},
+}
+
+@Article{brms2018,
+  title = {Advanced {Bayesian} Multilevel Modeling with the {R} Package {brms}},
+  author = {Paul-Christian Bürkner},
+  journal = {The R Journal},
+  year = {2018},
+  volume = {10},
+  number = {1},
+  pages = {395--411},
+  doi = {10.32614/RJ-2018-017},
+  encoding = {UTF-8},
 }
 
 @Book{ggplot22016,
@@ -287,6 +370,41 @@
   pages = {77--102},
   year = {2017},
   url = {https://journal.r-project.org/archive/2017/RJ-2017-024/index.html},
+}
+
+@Article{Rcpp2011,
+  title = {{Rcpp}: Seamless {R} and {C++} Integration},
+  author = {Dirk Eddelbuettel and Romain Fran\c{c}ois},
+  journal = {Journal of Statistical Software},
+  year = {2011},
+  volume = {40},
+  number = {8},
+  pages = {1--18},
+  url = {http://www.jstatsoft.org/v40/i08/},
+  doi = {10.18637/jss.v040.i08},
+}
+
+@Book{Rcpp2013,
+  title = {Seamless {R} and {C++} Integration with {Rcpp}},
+  author = {Dirk Eddelbuettel},
+  publisher = {Springer},
+  address = {New York},
+  year = {2013},
+  note = {ISBN 978-1-4614-6867-7},
+  doi = {10.1007/978-1-4614-6868-4},
+}
+
+@Article{Rcpp2017,
+  title = {{Extending 	extit{R} with 	extit{C++}: A Brief Introduction to 	extit{Rcpp}}},
+  author = {Dirk Eddelbuettel and James Joseph Balamuta},
+  journal = {PeerJ Preprints},
+  year = {2017},
+  month = {aug},
+  volume = {5},
+  pages = {e3188v1},
+  issn = {2167-9843},
+  url = {https://doi.org/10.7287/peerj.preprints.3188v1},
+  doi = {10.7287/peerj.preprints.3188v1},
 }
 
 @Book{rmarkdown2018,

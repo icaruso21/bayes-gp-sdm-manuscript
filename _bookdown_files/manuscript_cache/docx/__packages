@@ -23,3 +23,9 @@ extrafont
 StanHeaders
 rstan
 ROCR
+ICON
+Rcpp
+brms
+shiny
+bayesplot
+formatR
